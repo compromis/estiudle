@@ -10,6 +10,10 @@ export const useStatsStore = defineStore('stats', {
   },
 
   actions: {
+    registerStats ({ phrase, letters, solution, failed }) {
+      
+    },
+
     openModal () {
       this.modalOpen = true
     },

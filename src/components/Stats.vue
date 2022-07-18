@@ -6,14 +6,15 @@ import { useStatsStore } from '@/stores/stats.js'
 
 const board = useBoardStore()
 const stats = useStatsStore()
-const { todaysPhrase, finished } = storeToRefs(board)
+const { todaysPhrase, letters, solution, finished, failed } = storeToRefs(board)
 const { modalOpen } = storeToRefs(stats)
 
 const close = () => stats.closeModal()
 
 watch(finished, (value) => {
   if (value) {
-    // stats.registerStats()
+    const phrase = todaysPhrase.phrase
+    stats.registerStats({ phrase, letters, solution, failed })
     stats.openModal()
   }
 })

@@ -16,10 +16,13 @@ export const useBoardStore = defineStore('board', {
 
   actions: {
     enterLetter (letter) {
+      // Only 1 vowel is allowed
       this.letters.push(letter)
     },
 
     enterSolution (letter) {
+      // If a user enters a wrong letter
+      // it's game over
       if (this.todaysPhrase.phrase.includes(letter)) {
         this.solution.push(letter)
       } else {

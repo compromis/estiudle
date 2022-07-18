@@ -6,11 +6,23 @@ const board = useBoardStore()
 
 const rows = [
   'QWERTYUIOP'.split(''),
-  'ASDFGHJKL'.split(''),
+  'ASDFGHJKLÇ'.split(''),
   ['Enter', ...'ZXCVBNM'.split(''), 'Backspace']
 ]
 
-const { allLetters, keysDisabled, solving, solved, failed } = storeToRefs(board)
+const vowels = 'AEIOU'.split('')
+
+const { allLetters, letters, keysDisabled, solving, solved, failed } = storeToRefs(board)
+
+const isKeyDisabled = (key) => {
+  // Only one vowel is allowed
+  const isVowel = vowels.includes(key)
+  const hasVowels = letters.value.some(letter => (vowels.includes(letter)))
+
+  return allLetters.value.includes(key)
+    || keysDisabled.value
+    || (isVowel && hasVowels)
+}
 
 const enterLetter = (key) => {
   if (solving.value) {
@@ -18,11 +30,6 @@ const enterLetter = (key) => {
   } else {
     board.enterLetter(key)
   }
-}
-
-const isKeyDisabled = (key) => {
-  return allLetters.value.includes(key)
-    || keysDisabled.value
 }
 
 const solve = () => {
