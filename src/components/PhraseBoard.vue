@@ -3,15 +3,18 @@ import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 
 const board = useBoardStore()
-const { letters } = storeToRefs(board)
-const { todaysPhrase } = board
-const specialChars = [' ', '\t', '\'']
+const { allLetters, finished } = storeToRefs(board)
+const { todaysPhrase, specialChars } = board
+const letterShown = (letter) => {
+  return allLetters.value.includes(letter)
+    || specialChars.includes(letter) || finished.value
+}
 </script>
 
 <template>
   <div>
     <span v-for="(letter, i) in todaysPhrase.phrase" :key="i">
-      <span v-if="letters.includes(letter) || specialChars.includes(letter)">
+      <span v-if="letterShown(letter)">
         {{ letter }}
       </span>
       <span v-else>
@@ -19,4 +22,5 @@ const specialChars = [' ', '\t', '\'']
       </span>
     </span>
   </div>
+  Finished: {{ finished }}
 </template>

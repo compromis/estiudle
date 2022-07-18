@@ -1,6 +1,6 @@
 export default [
   {
-    phrase: 'JOAN BALDOVÍ',
+    phrase: 'JOAN BALDOVI',
     clue: 'Treballa per 32',
     reveal: 'Únic diputat valencià al Congrés (dels 32 que es trien) que defensa els interessos de la ciutadania valenciana. La resta sempre ha d’estar pendent del que diga la seu madrilenya del seu partit.'
   },
