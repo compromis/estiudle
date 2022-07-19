@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 
@@ -9,6 +10,10 @@ const letterShown = (letter) => {
   return allLetters.value.includes(letter)
     || specialChars.includes(letter) || finished.value
 }
+
+onMounted(() => {
+  board.startGame()
+})
 </script>
 
 <template>

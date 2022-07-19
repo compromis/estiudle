@@ -4,17 +4,23 @@ import phrases from '@/content/phrases.js'
 export const useBoardStore = defineStore('board', {
   state () {
     return {
-      phrases,
       letters: [],
       solution: [],
-      maxLetters: 6,
+      maxLetters: 5,
       solving: false,
       failed: false,
-      specialChars: [' ', '\t', '\'']
+      specialChars: [' ', '\t', '\'', ',', '\n'],
+      lastPlayed: 0
     }
   },
 
   actions: {
+    startGame () {
+      const date = new Date()
+      const currentDate = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`
+      this.lastPlayed = currentDate
+    },
+
     enterLetter (letter) {
       // Only 1 vowel is allowed
       this.letters.push(letter)
@@ -36,7 +42,7 @@ export const useBoardStore = defineStore('board', {
   },
 
   getters: {
-    todaysPhrase ({ phrases }) {
+    todaysPhrase () {
       const date = new Date()
       const day = date.getDate()
       // return phrases[day - 1]
@@ -76,5 +82,17 @@ export const useBoardStore = defineStore('board', {
     finished () {
       return this.solved || this.failed
     }
-  }
+  },
+
+  persist: {
+    afterRestore (context) {
+      // Reset store every day
+      const date = new Date()
+      const currentDate = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`
+
+      if (currentDate > context.store.lastPlayed) {
+        context.store.$patch({ letters: [], solution: [], solving: false, failed: false })
+      }
+    }
+  },
 })

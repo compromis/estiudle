@@ -6,15 +6,13 @@ import { useStatsStore } from '@/stores/stats.js'
 
 const board = useBoardStore()
 const stats = useStatsStore()
-const { todaysPhrase, letters, solution, finished, failed } = storeToRefs(board)
-const { modalOpen } = storeToRefs(stats)
-
+const { todaysPhrase, letters, finished, failed } = storeToRefs(board)
+const { modalOpen, stats: gameStats } = storeToRefs(stats)
 const close = () => stats.closeModal()
 
 watch(finished, (value) => {
   if (value) {
-    const phrase = todaysPhrase.phrase
-    stats.registerStats({ phrase, letters, solution, failed })
+    stats.registerStats({ letters: letters.value, failed: failed.value })
     stats.openModal()
   }
 })
@@ -27,6 +25,9 @@ watch(finished, (value) => {
     <div>
       The answer was {{ todaysPhrase.phrase }}
       {{ todaysPhrase.reveal }}
+    </div>
+    <div>
+      Stats: {{ gameStats }}
     </div>
   </div>
 </template>
