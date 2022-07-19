@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { currentDate } from '@/utils/date.js'
 import phrases from '@/content/phrases.js'
 
 export const useStatsStore = defineStore('stats', {
@@ -8,7 +9,7 @@ export const useStatsStore = defineStore('stats', {
         played: 0,
         won: 0,
         failed: 0,
-        currentStreal: 0,
+        currentStreak: 0,
         maxStreak: 0,
         letters: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
         winPercentage: 0
@@ -20,10 +21,6 @@ export const useStatsStore = defineStore('stats', {
 
   actions: {
     registerStats ({ letters, failed }) {
-      const date = new Date()
-      const currentDate = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`
-      if (this.lastPlayed == currentDate) return
-
       this.lastPlayed = currentDate
       this.stats.played++
       this.stats.letters[letters.length]++
@@ -52,5 +49,15 @@ export const useStatsStore = defineStore('stats', {
     }
   },
 
-  persist: true,
+  persist: {
+    afterRestore (context) {
+      // Reset store every day or if testing
+      const today = currentDate()
+      const testing = window.location.hash
+
+      if (today > context.store.lastPlayed || testing) {
+        context.store.$patch({ modalOpen: false })
+      }
+    }
+  },
 })

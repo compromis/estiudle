@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { currentDate, currentDay } from '@/utils/date.js'
 import phrases from '@/content/phrases.js'
 
 export const useBoardStore = defineStore('board', {
@@ -16,9 +17,7 @@ export const useBoardStore = defineStore('board', {
 
   actions: {
     startGame () {
-      const date = new Date()
-      const currentDate = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`
-      this.lastPlayed = currentDate
+      this.lastPlayed = currentDate()
     },
 
     enterLetter (letter) {
@@ -43,10 +42,9 @@ export const useBoardStore = defineStore('board', {
 
   getters: {
     todaysPhrase () {
-      const date = new Date()
-      const day = date.getDate()
-      // return phrases[day - 1]
-      return phrases[0]
+      const testing = window.location.hash.replaceAll('#','')
+      const day = currentDay()
+      return testing ? phrases[testing] : phrases[day]
     },
 
     todaysClue () {
@@ -86,11 +84,11 @@ export const useBoardStore = defineStore('board', {
 
   persist: {
     afterRestore (context) {
-      // Reset store every day
-      const date = new Date()
-      const currentDate = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`
+      // Reset store every day or if testing
+      const today = currentDate()
+      const testing = window.location.hash
 
-      if (currentDate > context.store.lastPlayed) {
+      if (today > context.store.lastPlayed || testing) {
         context.store.$patch({ letters: [], solution: [], solving: false, failed: false })
       }
     }

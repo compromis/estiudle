@@ -21,7 +21,7 @@ const isKeyDisabled = (key) => {
 
   return allLetters.value.includes(key)
     || keysDisabled.value
-    || (isVowel && hasVowels)
+    || (isVowel && hasVowels && !solving.value)
 }
 
 const enterLetter = (key) => {
