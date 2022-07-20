@@ -63,89 +63,97 @@ const enterSolveMode = () => {
 <template>
   <div id="keyboard">
     <div class="row" :key="i" v-for="(row, i) in rows">
-      <div class="spacer" v-if="i === 1"></div>
-      <button
-        v-for="key in row"
-        :key="key"
-        @click="handleLetter(key)"
-        :disabled="isKeyDisabled(key)"
-        :class="selectedLetter === key && 'selected'"
-      >
+      <div class="spacer" v-if="i === 2"></div>
+      <button v-for="key in row" :key="key" @click="handleLetter(key)" :disabled="isKeyDisabled(key)"
+        :class="[selectedLetter === key && 'selected', key.toLowerCase()]">
         <span v-if="key !== 'Backspace'">{{ key }}</span>
-        <svg
-          v-else
-          xmlns="http://www.w3.org/2000/svg"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-        >
-          <path
-            fill="currentColor"
-            d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"
-          ></path>
+        <svg v-else xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+          <path fill="currentColor"
+            d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z">
+          </path>
         </svg>
       </button>
-      <div class="spacer" v-if="i === 1"></div>
+      <div class="spacer" v-if="i === 2"></div>
     </div>
   </div>
 
   <div v-if="solving">
-    <button @click="solve">Resoldre el panell</button>
+    <button class="button-solve-confirm" @click="solve">Resoldre el panell</button>
   </div>
   <div v-else-if="selectedLetter">
-    <button @click="enterLetter">Compra la {{ selectedLetter }}</button>
+    <button class="button-enter-letter" @click="enterLetter">Compra la {{ selectedLetter }}</button>
   </div>
   <div v-else>
-    <button @click="enterSolveMode">Resoldre!</button>
+    <button class="button-solve-panel"  @click="enterSolveMode">Resoldre!</button>
   </div>
 
   Solved: {{ solved }}
   Failed: {{ failed }}
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .selected:not(:disabled) {
-  border: 2px black solid;
+  border: 4px var(--blue) solid;
+  color: var(--blue)
 }
 
 #keyboard {
-  margin: 30px 8px 0;
   user-select: none;
+  margin: .5rem 0;
 }
 .row {
-  display: flex;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  gap: .5rem;
   width: 100%;
-  margin: 0 auto 8px;
+  margin-top: .5rem;
   touch-action: manipulation;
 }
-.spacer {
-  flex: 0.5;
-}
+
 button {
   font-family: inherit;
   font-weight: bold;
+  font-size: var(--font-size-md);
   border: 0;
   padding: 0;
-  margin: 0 6px 0 0;
-  height: 58px;
+  height: 4rem;
+  width: 100%;
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
-  background-color: #d3d6da;
-  color: #1a1a1b;
-  flex: 1;
+  background-color: var(--white);
+  color: var(--black);
   display: flex;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
 }
+
+.button {
+  &-enter-letter {
+    background: var(--blue);
+    color: var(--white);
+  }
+
+  &-solve-panel {
+    background: var(--red);
+    color: var(--white);
+  }
+
+  &-solve-confirm {
+    background: var(--red);
+    color: var(--white);
+  }
+}
+
+
 button:last-of-type {
   margin: 0;
 }
-button.big {
-  flex: 1.5;
-}
+
 button:disabled {
   opacity: .5;
 }
