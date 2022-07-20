@@ -11,8 +11,8 @@ import Tester from '@/components/Tester.vue'
 <template>
   <div class="main-container">
     <AppNav />
-    <Clue />
     <PhraseBoard />
+    <Clue />
     <LetterBoard />
     <Keyboard />
     <Stats />

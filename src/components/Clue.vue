@@ -6,7 +6,36 @@ const { clue } = board
 </script>
 
 <template>
-  <div>
-    Today's clue: {{ clue }}
+  <div class="clue">
+    <div class="clue-title">
+      Pista
+    </div>
+    <div class="clue-content">
+      {{ clue }}
+    </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.clue {
+  font-size: var(--font-size-sm);
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-content {
+    border-radius: .25rem;
+    background: var(--white);
+    color: var(--black);
+    line-height: 1.1;
+    padding: .4rem .6rem;
+    margin: 0 auto;
+  }
+
+  &-title {
+    text-transform: uppercase;
+  }
+}
+
+</style>
