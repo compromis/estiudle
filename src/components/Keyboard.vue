@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 
@@ -7,33 +8,55 @@ const board = useBoardStore()
 const rows = [
   'QWERTYUIOP'.split(''),
   'ASDFGHJKLÇ'.split(''),
-  ['Enter', ...'ZXCVBNM'.split(''), 'Backspace']
+  [...'ZXCVBNM'.split(''), 'Backspace']
 ]
 
 const vowels = 'AEIOU'.split('')
 
-const { allLetters, letters, keysDisabled, solving, solved, failed } = storeToRefs(board)
+const { letters, keysDisabled, solving, solved, failed } = storeToRefs(board)
 
 const isKeyDisabled = (key) => {
   // Only one vowel is allowed
   const isVowel = vowels.includes(key)
   const hasVowels = letters.value.some(letter => (vowels.includes(letter)))
 
-  return allLetters.value.includes(key)
+  return letters.value.includes(key)
     || keysDisabled.value
     || (isVowel && hasVowels && !solving.value)
 }
 
-const enterLetter = (key) => {
+const handleLetter = (key) => {
   if (solving.value) {
-    board.enterSolution(key)
+    if (key === 'Backspace') {
+      board.backspace()
+    } else {
+      board.enterSolution(key)
+    }
   } else {
-    board.enterLetter(key)
+    selectLetter(key)
   }
+}
+
+const selectedLetter = ref(null)
+const selectLetter = (key) => {
+  if (key === 'Backspace') {
+    selectedLetter.value = null
+  } else {
+    selectedLetter.value = key
+  }
+}
+
+const enterLetter = () => {
+  board.enterLetter(selectedLetter.value)
+  selectedLetter.value = null
 }
 
 const solve = () => {
   board.solve()
+}
+
+const enterSolveMode = () => {
+  board.enterSolveMode()
 }
 </script>
 
@@ -44,8 +67,9 @@ const solve = () => {
       <button
         v-for="key in row"
         :key="key"
-        @click="enterLetter(key)"
+        @click="handleLetter(key)"
         :disabled="isKeyDisabled(key)"
+        :class="selectedLetter === key && 'selected'"
       >
         <span v-if="key !== 'Backspace'">{{ key }}</span>
         <svg
@@ -64,17 +88,26 @@ const solve = () => {
       <div class="spacer" v-if="i === 1"></div>
     </div>
   </div>
+
   <div v-if="solving">
-    Solving...
+    <button @click="solve">Resoldre el panell</button>
+  </div>
+  <div v-else-if="selectedLetter">
+    <button @click="enterLetter">Compra la {{ selectedLetter }}</button>
   </div>
   <div v-else>
-    <button @click="solve">Solve</button>
+    <button @click="enterSolveMode">Resoldre!</button>
   </div>
+
   Solved: {{ solved }}
   Failed: {{ failed }}
 </template>
 
 <style scoped>
+.selected:not(:disabled) {
+  border: 2px black solid;
+}
+
 #keyboard {
   margin: 30px 8px 0;
   user-select: none;

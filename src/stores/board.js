@@ -6,10 +6,11 @@ export const useBoardStore = defineStore('board', {
   state () {
     return {
       letters: [],
-      solution: [],
+      panel: [],
       maxLetters: 5,
       solving: false,
       failed: false,
+      solved: false,
       specialChars: [' ', '\t', '\'', ',', '\n'],
       lastPlayed: 0
     }
@@ -18,48 +19,73 @@ export const useBoardStore = defineStore('board', {
   actions: {
     startGame () {
       this.lastPlayed = currentDate()
-    },
-
-    enterLetter (letter) {
-      // Only 1 vowel is allowed
-      this.letters.push(letter)
-    },
-
-    enterSolution (letter) {
-      // If a user enters a wrong letter
-      // it's game over
-      if (this.todaysPhrase.phrase.includes(letter)) {
-        this.solution.push(letter)
-      } else {
-        this.failed = true
+      if (this.panel.length === 0) {
+        this.solution.forEach((letter) => {
+          const char = this.specialChars.includes(letter) ? letter : ''
+          this.panel.push(char)
+        })
       }
     },
 
-    solve () {
+    enterLetter (letter) {
+      this.letters.push(letter)
+      this.addLetterToPanel(letter)
+    },
+
+    addLetterToPanel (letter) {
+      this.solution.forEach((l, i) => {
+        if (l === letter) {
+          this.panel[i] = letter
+        }
+      })
+    },
+
+    enterSolution (letter) {
+      this.panel[this.firstAvailableSlotInSolution] = letter
+    },
+
+    backspace () {
+      this.panel[this.firstAvailableSlotInSolution - 1] = ''
+    },
+
+    enterSolveMode () {
       this.solving = true
+    },
+
+    solve () {
+      const phrase = this.panel.join('')
+      if (phrase === this.today.phrase) {
+        this.solved = true
+      } else {
+        this.failed = true
+      }
     }
   },
 
   getters: {
-    todaysPhrase () {
+    today () {
       const testing = window.location.hash.replaceAll('#','')
       const day = currentDay()
       return testing ? phrases[testing] : phrases[day]
     },
 
-    todaysClue () {
-      return this.todaysPhrase.clue
+    solution () {
+      return this.today.phrase.split('')
     },
 
-    allLetters ({ letters, solution }) {
-      return [...letters, ...solution]
+    clue () {
+      return this.today.clue
     },
 
     lettersWithState ({ letters }) {
       return letters.map(letter => {
-        const state = this.todaysPhrase.phrase.includes(letter)
+        const state = this.today.phrase.includes(letter)
         return { letter, state }
       })
+    },
+
+    firstAvailableSlotInSolution () {
+      return this.panel.findIndex((slot) => slot === '')
     },
 
     mustSolve ({ letters, maxLetters }) {
@@ -68,13 +94,6 @@ export const useBoardStore = defineStore('board', {
 
     keysDisabled ({ solving, failed }) {
       return (this.mustSolve && !solving) || failed || this.solved
-    },
-
-    solved () {
-      const phrase = this.todaysPhrase.phrase.split('')
-      return phrase.every(letter => (
-        this.allLetters.includes(letter) || this.specialChars.includes(letter)
-      ))
     },
 
     finished () {
@@ -89,7 +108,7 @@ export const useBoardStore = defineStore('board', {
       const testing = window.location.hash
 
       if (today > context.store.lastPlayed || testing) {
-        context.store.$patch({ letters: [], solution: [], solving: false, failed: false })
+        context.store.$patch({ letters: [], panel: [], solving: false, solved: false, failed: false })
       }
     }
   },

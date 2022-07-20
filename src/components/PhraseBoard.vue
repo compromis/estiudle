@@ -4,12 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 
 const board = useBoardStore()
-const { allLetters, finished } = storeToRefs(board)
-const { todaysPhrase, specialChars } = board
-const letterShown = (letter) => {
-  return allLetters.value.includes(letter)
-    || specialChars.includes(letter) || finished.value
-}
+const { panel, solving, firstAvailableSlotInSolution } = storeToRefs(board)
 
 onMounted(() => {
   board.startGame()
@@ -18,14 +13,14 @@ onMounted(() => {
 
 <template>
   <div>
-    <span v-for="(letter, i) in todaysPhrase.phrase" :key="i">
-      <span v-if="letterShown(letter)">
+    <span v-for="(letter, i) in panel" :key="i">
+      <span v-if="letter !== ''">
         {{ letter }}
       </span>
       <span v-else>
         _
+      {{ (i === firstAvailableSlotInSolution && solving) ? 'SELECTED' : '' }} 
       </span>
     </span>
   </div>
-  Finished: {{ finished }}
 </template>
