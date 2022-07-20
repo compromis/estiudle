@@ -13,7 +13,11 @@ const rows = [
 
 const vowels = 'AEIOU'.split('')
 
-const { letters, keysDisabled, solving, solved, failed } = storeToRefs(board)
+const { 
+  letters, keysDisabled,
+  solving, solved, failed, finished,
+  firstAvailableSlotInSolution
+} = storeToRefs(board)
 
 const isKeyDisabled = (key) => {
   // Only one vowel is allowed
@@ -25,7 +29,8 @@ const isKeyDisabled = (key) => {
     || (isVowel && hasVowels && !solving.value)
 }
 
-const handleLetter = (key) => {
+const selectedLetter = ref(null)
+const selectLetter = (key) => {
   if (solving.value) {
     if (key === 'Backspace') {
       board.backspace()
@@ -33,16 +38,11 @@ const handleLetter = (key) => {
       board.enterSolution(key)
     }
   } else {
-    selectLetter(key)
-  }
-}
-
-const selectedLetter = ref(null)
-const selectLetter = (key) => {
-  if (key === 'Backspace') {
-    selectedLetter.value = null
-  } else {
-    selectedLetter.value = key
+    if (key === 'Backspace') {
+      selectedLetter.value = null
+    } else {
+      selectedLetter.value = selectedLetter.value === key ? null : key
+    }
   }
 }
 
@@ -61,32 +61,38 @@ const enterSolveMode = () => {
 </script>
 
 <template>
-  <div id="keyboard">
-    <div class="row" :key="i" v-for="(row, i) in rows">
-      <div class="spacer" v-if="i === 2"></div>
-      <button v-for="key in row" :key="key" @click="handleLetter(key)" :disabled="isKeyDisabled(key)"
-        :class="[selectedLetter === key && 'selected', key.toLowerCase()]">
-        <span v-if="key !== 'Backspace'">{{ key }}</span>
-        <svg v-else xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-          <path fill="currentColor"
-            d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z">
-          </path>
-        </svg>
-      </button>
-      <div class="spacer" v-if="i === 2"></div>
+  <div v-if="!finished">
+    <div id="keyboard">
+      <div class="row" :key="i" v-for="(row, i) in rows">
+        <div class="spacer" v-if="i === 2"></div>
+        <button
+          v-for="key in row"
+          :key="key"
+          @click="selectLetter(key)"
+          :disabled="isKeyDisabled(key)"
+          :class="[selectedLetter === key && 'selected', key.toLowerCase()]"
+        >
+          <span v-if="key !== 'Backspace'">{{ key }}</span>
+          <svg v-else xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+            <path fill="currentColor"
+              d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z">
+            </path>
+          </svg>
+        </button>
+        <div class="spacer" v-if="i === 2"></div>
+      </div>
+    </div>
+
+    <div v-if="solving">
+      <button class="button-solve-confirm" @click="solve" :disabled="firstAvailableSlotInSolution !== -1">Resoldre el panell</button>
+    </div>
+    <div v-else-if="selectedLetter">
+      <button class="button-enter-letter" @click="enterLetter">Compra la {{ selectedLetter }}</button>
+    </div>
+    <div v-else>
+      <button class="button-solve-panel"  @click="enterSolveMode">Resoldre!</button>
     </div>
   </div>
-
-  <div v-if="solving">
-    <button class="button-solve-confirm" @click="solve">Resoldre el panell</button>
-  </div>
-  <div v-else-if="selectedLetter">
-    <button class="button-enter-letter" @click="enterLetter">Compra la {{ selectedLetter }}</button>
-  </div>
-  <div v-else>
-    <button class="button-solve-panel"  @click="enterSolveMode">Resoldre!</button>
-  </div>
-
   Solved: {{ solved }}
   Failed: {{ failed }}
 </template>

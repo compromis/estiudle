@@ -45,7 +45,19 @@ export const useBoardStore = defineStore('board', {
     },
 
     backspace () {
-      this.panel[this.firstAvailableSlotInSolution - 1] = ''
+      const slot = this.firstAvailableSlotInSolution
+
+      if (slot === -1) {
+        this.panel[this.panel.length - 1] = ''
+        return
+      }
+
+      const toDelete = this.panel[slot - 1]
+      if (!this.specialChars.includes(toDelete)) {
+        this.panel[slot - 1] = ''
+      } else {
+        this.panel[slot - 2] = ''
+      }
     },
 
     enterSolveMode () {
