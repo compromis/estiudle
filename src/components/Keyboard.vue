@@ -70,7 +70,7 @@ const enterSolveMode = () => {
           :key="key"
           @click="selectLetter(key)"
           :disabled="isKeyDisabled(key)"
-          :class="[selectedLetter === key && 'selected', key.toLowerCase()]"
+          :class="['button', selectedLetter === key && 'selected', key.toLowerCase()]"
         >
           <span v-if="key !== 'Backspace'">{{ key }}</span>
           <svg v-else xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -84,13 +84,13 @@ const enterSolveMode = () => {
     </div>
 
     <div v-if="solving">
-      <button class="button-solve-confirm" @click="solve" :disabled="firstAvailableSlotInSolution !== -1">Resoldre el panell</button>
+      <button class="solve-button solve-button-confirm" @click="solve" :disabled="firstAvailableSlotInSolution !== -1">Resoldre el panell</button>
     </div>
     <div v-else-if="selectedLetter">
-      <button class="button-enter-letter" @click="enterLetter">Compra la {{ selectedLetter }}</button>
+      <button class="solve-button solve-button-letter" @click="enterLetter">Compra la {{ selectedLetter }}</button>
     </div>
     <div v-else>
-      <button class="button-solve-panel"  @click="enterSolveMode">Resoldre!</button>
+      <button class="solve-button solve-button-solution"  @click="enterSolveMode">Resoldre!</button>
     </div>
   </div>
   Solved: {{ solved }}
@@ -98,11 +98,6 @@ const enterSolveMode = () => {
 </template>
 
 <style lang="scss" scoped>
-.selected:not(:disabled) {
-  border: 4px var(--blue) solid;
-  color: var(--blue)
-}
-
 #keyboard {
   user-select: none;
   margin: .5rem 0;
@@ -118,17 +113,13 @@ const enterSolveMode = () => {
   touch-action: manipulation;
 }
 
-button {
-  font-family: inherit;
-  font-weight: bold;
+.button {
   font-size: var(--font-size-md);
   border: 0;
   padding: 0;
   height: 4rem;
   width: 100%;
-  border-radius: 4px;
-  cursor: pointer;
-  user-select: none;
+  border-radius: .5rem;
   background-color: var(--white);
   color: var(--black);
   display: flex;
@@ -136,31 +127,34 @@ button {
   align-items: center;
   text-transform: uppercase;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  user-select: none;
+
+  &:disabled {
+    opacity: .6;
+  }
 }
 
-.button {
-  &-enter-letter {
+.solve-button {
+  font-size: var(--font-size-md);
+  width: 100%;
+  border-radius: .5rem;
+  height: 4rem;
+
+  &-letter {
     background: var(--blue);
     color: var(--white);
   }
-
-  &-solve-panel {
-    background: var(--red);
-    color: var(--white);
-  }
-
-  &-solve-confirm {
+  
+  &-solution,
+  &-confirm {
     background: var(--red);
     color: var(--white);
   }
 }
 
-
-button:last-of-type {
-  margin: 0;
-}
-
-button:disabled {
-  opacity: .5;
+.selected:not(:disabled) {
+  border: 4px var(--blue) solid;
+  color: var(--blue)
 }
 </style>
