@@ -9,15 +9,22 @@ import Tester from '@/components/Tester.vue'
 </script>
 
 <template>
-  <AppNav />
-  <Clue />
-  <PhraseBoard />
-  <LetterBoard />
-  <Keyboard />
-  <Stats />
+  <div class="main-container">
+    <AppNav />
+    <Clue />
+    <PhraseBoard />
+    <LetterBoard />
+    <Keyboard />
+    <Stats />
+  </div>
   <Tester />
 </template>
 
 <style scoped>
-
+.main-container {
+  padding-top: calc(var(--font-size-lg + 2rem));
+  margin: auto;
+  max-width: 900px;
+  padding: 0 1rem;
+}
 </style>
