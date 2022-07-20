@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'Geomanist Book';
+  src: url('../assets/fonts/Geomanist.woff2') format('woff2'),
+    url('../assets/fonts/Geomanist.woff') format('woff'),
+    url('../assets/fonts/Geomanist.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fig Grotesk';
+  src: url('../assets/fonts/FigGrotesk.woff2') format('woff2'),
+    url('../assets/fonts/FigGrotesk.woff') format('woff'),
+    url('../assets/fonts/FigGrotesk.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
