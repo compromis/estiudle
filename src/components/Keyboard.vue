@@ -65,13 +65,8 @@ const enterSolveMode = () => {
     <div id="keyboard">
       <div class="row" :key="i" v-for="(row, i) in rows">
         <div class="spacer" v-if="i === 2"></div>
-        <button
-          v-for="key in row"
-          :key="key"
-          @click="selectLetter(key)"
-          :disabled="isKeyDisabled(key)"
-          :class="['button', selectedLetter === key && 'selected', key.toLowerCase()]"
-        >
+        <button v-for="key in row" :key="key" @click="selectLetter(key)" :disabled="isKeyDisabled(key)"
+          :class="['button', selectedLetter === key && 'selected', key.toLowerCase()]">
           <span v-if="key !== 'Backspace'">{{ key }}</span>
           <svg v-else xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
             <path fill="currentColor"
@@ -82,15 +77,19 @@ const enterSolveMode = () => {
         <div class="spacer" v-if="i === 2"></div>
       </div>
     </div>
-
+    <div class="tutorial-text">
+      <span v-if="solving">Escriu la solució</span>
+      <span v-else>Tria fins a 4 consonants i una vocal</span>
+    </div>
     <div v-if="solving">
-      <button class="solve-button solve-button-confirm" @click="solve" :disabled="firstAvailableSlotInSolution !== -1">Resoldre el panell</button>
+      <button class="solve-button solve-button-confirm" @click="solve"
+        :disabled="firstAvailableSlotInSolution !== -1">Resoldre el panell</button>
     </div>
     <div v-else-if="selectedLetter">
       <button class="solve-button solve-button-letter" @click="enterLetter">Compra la {{ selectedLetter }}</button>
     </div>
     <div v-else>
-      <button class="solve-button solve-button-solution"  @click="enterSolveMode">Resoldre!</button>
+      <button class="solve-button solve-button-solution" @click="enterSolveMode">Resoldre!</button>
     </div>
   </div>
   Solved: {{ solved }}
@@ -151,6 +150,12 @@ const enterSolveMode = () => {
     background: var(--red);
     color: var(--white);
   }
+}
+
+.tutorial-text {
+  width: 100%;
+  text-align: center;
+  margin-bottom: .5rem;
 }
 
 .selected:not(:disabled) {
