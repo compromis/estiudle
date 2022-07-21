@@ -13,16 +13,25 @@ onMounted(() => {
 const computedPanel = computed(() => {
   const thisPanel = [...panel.value]
   const splitAt = thisPanel.findIndex(row => row === '\n')
-  const firstRow = thisPanel.splice(0, splitAt)
-  const secondRow = thisPanel.splice(1)
-  const rows = [firstRow, secondRow]
+  let rows
+
+  if (splitAt === -1) {
+    rows = [thisPanel, []]
+  } else {
+    const firstRow = thisPanel.splice(0, splitAt)
+    const secondRow = thisPanel.splice(1)
+    rows = [firstRow, secondRow]
+  }
 
   return rows.map(row => {
-    const surroundingSolts = 11 - row.length
-    const addSlots = Math.floor(surroundingSolts / 2)
+    const surroundingSlots = 11 - row.length
+    let slotsOnEachSide = Math.round(surroundingSlots / 2)
 
-    for (let i = 0; i <= addSlots * 2; i++) {
-      const addMethod = i > addSlots ? 'unshift' : 'push'
+    const difference = surroundingSlots - (slotsOnEachSide * 2)
+    slotsOnEachSide = slotsOnEachSide + difference
+
+    for (let i = 1; i <= slotsOnEachSide * 2 - difference; i++) {
+      const addMethod = i > slotsOnEachSide - difference ? 'unshift' : 'push'
       row[addMethod]('empty')
     }
 
@@ -41,8 +50,8 @@ const computedPanel = computed(() => {
       <span v-for="i in 9" :key="i" class="slot empty" />
     </div>
     <div v-for="(row , i) in computedPanel" :key="i" class="row">
-      <span v-for="(letter, l) in row" :key="i + l" class="slot">
-        {{ letter === 'empty' ? '-' : letter }}
+      <span v-for="(letter, l) in row" :key="i + l" :class="['slot', { empty: letter === 'empty' || letter === ' ' }]">
+        {{ letter === 'empty' ? '' : letter }}
       </span>
     </div>
     <div class="row">
@@ -60,12 +69,15 @@ const computedPanel = computed(() => {
     display: flex;
     gap: 1rem;
     margin: 1rem auto;
+    justify-content: center;
   }
 
   .slot {
     display: block;
     height: 20px;
     width: 20px;
+    background: white;
+    color: black;
 
     &.empty {
       background: blue;

@@ -10,7 +10,7 @@ export default [
     reveal: 'Gràcies a la seua aposta per la mobilitat sostenible i l’augment de les connexions ciclistes, València s’ha convertit en una de les ciutats on més persones utilitzen la bicicleta o el patitet per desplaçar-se.'
   },
   {
-    phrase: 'OTRA',
+    phrase: 'TOMATINA\nDE BUNYOL',
     clue: 'Grezzi, Ribó i Shakira',
     reveal: 'Gràcies a la seua aposta per la mobilitat sostenible i l’augment de les connexions ciclistes, València s’ha convertit en una de les ciutats on més persones utilitzen la bicicleta o el patitet per desplaçar-se.'
   },
@@ -95,17 +95,17 @@ export default [
     reveal: 'Gràcies a la seua aposta per la mobilitat sostenible i l’augment de les connexions ciclistes, València s’ha convertit en una de les ciutats on més persones utilitzen la bicicleta o el patitet per desplaçar-se.'
   },
   {
-    phrase: 'OTRA',
+    phrase: 'JOAN\nRIBO',
     clue: 'Grezzi, Ribó i Shakira',
     reveal: 'Gràcies a la seua aposta per la mobilitat sostenible i l’augment de les connexions ciclistes, València s’ha convertit en una de les ciutats on més persones utilitzen la bicicleta o el patitet per desplaçar-se.'
   },
   {
-    phrase: 'OTRA',
+    phrase: 'JOAN\nRIBO',
     clue: 'Grezzi, Ribó i Shakira',
     reveal: 'Gràcies a la seua aposta per la mobilitat sostenible i l’augment de les connexions ciclistes, València s’ha convertit en una de les ciutats on més persones utilitzen la bicicleta o el patitet per desplaçar-se.'
   },
   {
-    phrase: 'OTRA',
+    phrase: 'JOAN\nRIBO',
     clue: 'Grezzi, Ribó i Shakira',
     reveal: 'Gràcies a la seua aposta per la mobilitat sostenible i l’augment de les connexions ciclistes, València s’ha convertit en una de les ciutats on més persones utilitzen la bicicleta o el patitet per desplaçar-se.'
   },
