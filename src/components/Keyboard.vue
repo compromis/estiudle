@@ -62,7 +62,7 @@ const enterSolveMode = () => {
 
 <template>
   <div v-if="!finished">
-    <div id="keyboard">
+    <div class="keyboard">
       <div class="row" :key="i" v-for="(row, i) in rows">
         <div class="spacer" v-if="i === 2"></div>
         <button v-for="key in row" :key="key" @click="selectLetter(key)" :disabled="isKeyDisabled(key)"
@@ -77,27 +77,39 @@ const enterSolveMode = () => {
         <div class="spacer" v-if="i === 2"></div>
       </div>
     </div>
+
     <div class="tutorial-text">
       <span v-if="solving">Escriu la solució</span>
       <span v-else>Tria fins a 4 consonants i una vocal</span>
     </div>
+
     <div v-if="solving">
-      <button class="solve-button solve-button-confirm" @click="solve"
-        :disabled="firstAvailableSlotInSolution !== -1">Resoldre el panell</button>
+      <button
+        class="solve-button solve-button-confirm"
+        @click="solve"
+        :disabled="firstAvailableSlotInSolution !== -1">
+        Resoldre el panell
+      </button>
     </div>
     <div v-else-if="selectedLetter">
-      <button class="solve-button solve-button-letter" @click="enterLetter">Compra la {{ selectedLetter }}</button>
+      <button
+        class="solve-button solve-button-letter"
+        @click="enterLetter">
+        Compra la {{ selectedLetter }}
+      </button>
     </div>
     <div v-else>
-      <button class="solve-button solve-button-solution" @click="enterSolveMode">Resoldre!</button>
+      <button
+        class="solve-button solve-button-solution"
+        @click="enterSolveMode">
+        Resoldre!
+      </button>
     </div>
   </div>
-  Solved: {{ solved }}
-  Failed: {{ failed }}
 </template>
 
 <style lang="scss" scoped>
-#keyboard {
+.keyboard {
   user-select: none;
   margin: .5rem 0;
 }

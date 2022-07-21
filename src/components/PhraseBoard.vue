@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 
 const board = useBoardStore()
-const { panel, solving, firstAvailableSlotInSolution } = storeToRefs(board)
+const { letters, panel, solving, solved, failed } = storeToRefs(board)
 
 onMounted(() => {
   board.startGame()
@@ -38,21 +38,46 @@ const computedPanel = computed(() => {
     return row
   })
 })
+
+const isEmpty = (letter) => letter === 'empty' || letter === ' '
+
+const isSelected = (row, slot) => {
+  let firstAvailableSlot = null
+
+  computedPanel.value.forEach((row, rowIndex) => {
+    if (!firstAvailableSlot) {
+      const availableSlotInRow = row.findIndex(letter => letter === '')
+      console.log(rowIndex, availableSlotInRow)
+      if (availableSlotInRow > -1) {
+        firstAvailableSlot = [rowIndex, availableSlotInRow]
+      }
+    }
+  })
+
+  if (!firstAvailableSlot) {
+    return false
+  }
+
+  const [rowIndex, slotIndex] = firstAvailableSlot
+
+  return solving.value && rowIndex === row && slotIndex === slot
+}
+
+const isFilled = (letter) => letters.value.includes(letter)
 </script>
 
 <template>
-<pre>
-  Panel: {{ panel }}
-  Computed: {{ computedPanel }}
-  </pre>
-  <div class="panel">
+  <div :class="['panel', { solved, failed }]">
     <div class="row">
       <span v-for="i in 9" :key="i" class="slot empty" />
     </div>
-    <div v-for="(row , i) in computedPanel" :key="i" class="row">
-      <span v-for="(letter, l) in row" :key="i + l" :class="['slot', { empty: letter === 'empty' || letter === ' ' }]">
-        {{ letter === 'empty' ? '' : letter }}
-      </span>
+    <div v-for="(row , r) in computedPanel" :key="r" class="row">
+      <template v-for="(letter, l) in row" :key="`${r}${l}`">
+        <span v-if="isEmpty(letter)" :class="['slot', 'empty']" />
+        <span v-else :class="['slot', { selected: isSelected(r, l), filled: isFilled(letter) }]">
+          {{ letter }}
+        </span>
+      </template>
     </div>
     <div class="row">
       <span v-for="i in 9" :key="i" class="slot empty" />
@@ -81,6 +106,14 @@ const computedPanel = computed(() => {
 
     &.empty {
       background: blue;
+    }
+
+    &.selected {
+      border: 2px solid black;
+    }
+
+    &.filled {
+      background: aquamarine;
     }
   }
 </style>
