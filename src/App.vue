@@ -10,21 +10,34 @@ import Results from './components/Results.vue'
 
 <template>
   <div class="main-container">
-    <AppNav />
-    <PhraseBoard />
-    <Clue />
-    <LetterBoard />
-    <Keyboard />
-    <Results />
+    <div class="main-container-aligner">
+      <AppNav />
+      <PhraseBoard />
+      <Clue />
+      <LetterBoard />
+      <Keyboard />
+      <Results />
+    </div>
   </div>
   <Tester />
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .main-container {
-  padding-top: calc(var(--font-size-lg + 2rem));
-  margin: auto;
-  max-width: 900px;
-  padding: 0 .25rem;
+  position: fixed;
+  display: flex;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+
+  &-aligner {
+    display: grid;
+    grid-template-rows: auto 1fr auto auto auto;
+    margin: 0 auto;
+    max-width: 900px;
+    padding: .5rem .25rem;
+  }
 }
 </style>

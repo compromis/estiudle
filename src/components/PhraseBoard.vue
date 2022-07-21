@@ -101,6 +101,7 @@ const isFilled = (letter) => letters.value.includes(letter)
     flex-direction: column;
     align-items: center;
     filter: url('#goo');
+    align-self: center;
   }
 
   .row {

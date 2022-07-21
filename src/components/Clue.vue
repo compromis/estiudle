@@ -7,9 +7,6 @@ const { clue } = board
 
 <template>
   <div class="clue">
-    <div class="clue-title">
-      Pista
-    </div>
     <div class="clue-content">
       {{ clue }}
     </div>
