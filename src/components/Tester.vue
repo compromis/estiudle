@@ -17,9 +17,9 @@ const setPhrase = (e) => {
 </script>
 
 <template>
-  <div v-if="showTester">
+  <div v-if="showTester" style="position: fixed; z-index: 1000; top: 0;">
     Tester:
-    <select @change="setPhrase">
+    <select @change="setPhrase"> 
       <option v-for="(phrase, i) in phrases" :key="phrase.phrase" :value="i" :selected="phraseId == i">
         {{ i+1 }} agost
       </option>
