@@ -55,8 +55,7 @@ const letters = computed(() => {
 
     &-empty {
       background: var(--white);
-      outline: 4px solid var(--blue);
-      outline-offset: -4px;
+      box-shadow: inset 0 0 0 4px var(--blue);
     }
   }
 }

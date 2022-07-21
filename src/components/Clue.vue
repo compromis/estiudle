@@ -23,6 +23,7 @@ const { clue } = board
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 
   &-content {
     border-radius: .25rem;

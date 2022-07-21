@@ -125,8 +125,7 @@ const isFilled = (letter) => letters.value.includes(letter)
     font-size: clamp(1.75rem, 7vw, 3.5rem);
     color: var(--black);
     border-radius: var(--border-radius);
-    outline: clamp(3px, .25vw, 12px) solid var(--blue);
-    outline-offset: calc(clamp(3px, .1vw, 12px) * -1);
+    box-shadow: inset 0 0 0 clamp(3px, .25vw, 12px) var(--blue);
 
     &.empty {
       background: var(--blue);

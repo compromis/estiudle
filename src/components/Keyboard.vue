@@ -56,6 +56,7 @@ const solve = () => {
 }
 
 const enterSolveMode = () => {
+  selectedLetter.value = null
   board.enterSolveMode()
 }
 
@@ -96,26 +97,26 @@ const handleKeyStrokes = (e) => {
       <span v-else>Tria fins a 4 consonants i una vocal</span>
     </div>
 
-    <div v-if="solving">
+    <div class="buttons">
       <button
+        v-if="solving"
         class="solve-button solve-button-confirm"
         @click="solve"
         :disabled="firstAvailableSlotInSolution !== -1">
         Resoldre el panell
       </button>
-    </div>
-    <div v-else-if="selectedLetter">
       <button
+        v-if="!solving"
         class="solve-button solve-button-letter"
-        @click="enterLetter">
-        Compra la {{ selectedLetter }}
+        @click="enterLetter"
+        :disabled="!selectedLetter">
+        {{ selectedLetter ? `Compra la ${selectedLetter}` : 'Selecciona lletra' }}
       </button>
-    </div>
-    <div v-else>
       <button
+        v-if="!solving"
         class="solve-button solve-button-solution"
         @click="enterSolveMode">
-        Resoldre!
+        Me la se
       </button>
     </div>
   </div>
@@ -135,6 +136,15 @@ const handleKeyStrokes = (e) => {
   width: 100%;
   margin-top: clamp(.25rem, .5vw, .5rem);
   touch-action: manipulation;
+}
+
+.buttons {
+  display: flex;
+  gap: .5rem;
+
+  .solve-button {
+    flex-grow: 1;
+  }
 }
 
 .button {
@@ -164,8 +174,10 @@ const handleKeyStrokes = (e) => {
   width: 100%;
   border-radius: var(--border-radius);
   height: 4rem;
+  line-height: 1;
 
   &-letter {
+    font-size: var(--font-size-sm);
     background: var(--blue);
     color: var(--white);
   }

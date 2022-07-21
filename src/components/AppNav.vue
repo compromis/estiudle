@@ -9,9 +9,9 @@ const openStats = () => stats.openModal()
 
 <template>
   <div class="app-nav">
-    <button>Info</button>
+    <button>I</button>
     <div class="app-nav-logo">Estiudle</div>
-    <button @click="openStats">Stats</button>
+    <button @click="openStats">S</button>
   </div>
 </template>
 
@@ -19,17 +19,19 @@ const openStats = () => stats.openModal()
 .app-nav {
   width: 100%;
   display: flex;
+  align-items: center;
   line-height: 1;
   padding: 1rem 0;
 
   &-logo {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
     margin: 0 auto;
   }
 
   button {
     color: var(--white);
     font-size: var(--font-size-md);
+    line-height: 1;
   }
 }
 </style>
