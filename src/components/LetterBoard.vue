@@ -23,7 +23,6 @@ const letters = computed(() => {
       {{ letter.letter }}
     </li>
   </ul>
-  <span>{{letters}}</span>
 </template>
 
 <style lang="scss" scoped>

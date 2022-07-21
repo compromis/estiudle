@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 
@@ -57,6 +57,19 @@ const solve = () => {
 
 const enterSolveMode = () => {
   board.enterSolveMode()
+}
+
+onMounted(() => {
+  window.addEventListener('keypress', handleKeyStrokes)
+})
+
+const handleKeyStrokes = (e) => {
+  const letters = 'qwertyuiopasdfghjklçzxcvbnm'.split('')
+  if (letters.includes(e.key) && solving.value) {
+    board.enterSolution(e.key.toUpperCase())
+  } else if (letters.includes(e.key) && !solved.value) {
+    selectedLetter.value = e.key.toUpperCase()
+  }
 }
 </script>
 
@@ -161,6 +174,10 @@ const enterSolveMode = () => {
   &-confirm {
     background: var(--red);
     color: var(--white);
+  }
+
+  &:disabled {
+    opacity: .6;
   }
 }
 

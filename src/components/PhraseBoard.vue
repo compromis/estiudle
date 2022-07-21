@@ -4,14 +4,15 @@ import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 
 const board = useBoardStore()
-const { letters, panel, solving, solved, failed } = storeToRefs(board)
+const { letters, panel, solution, solving, solved, failed } = storeToRefs(board)
 
 onMounted(() => {
   board.startGame()
 })
 
 const computedPanel = computed(() => {
-  const thisPanel = [...panel.value]
+  const thisSolution = solution.value
+  const thisPanel = failed.value ? [...thisSolution] : [...panel.value]
   const splitAt = thisPanel.findIndex(row => row === '\n')
   let rows
 

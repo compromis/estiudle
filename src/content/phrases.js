@@ -20,12 +20,12 @@ export default [
     reveal: ''
   },
   {
-    phrase: 'LA BICICLETA',
+    phrase: 'LA\nBICICLETA',
     clue: 'Grezzi , Ribó i Shakira',
     reveal: ''
   },
   {
-    phrase: 'AITANA MAS',
+    phrase: 'AITANA\nMAS',
     clue: 'En Alacant i alacantina',
     reveal: ''
   },
@@ -35,7 +35,7 @@ export default [
     reveal: ''
   },
   {
-    phrase: 'AEROPOR\nTDE L’ALTET',
+    phrase: 'AEROPORT\nDE L’ALTET',
     clue: 'El més gran d\'Europa sense connexió ferroviaria',
     reveal: ''
   },
@@ -45,12 +45,12 @@ export default [
     reveal: ''
   },
   {
-    phrase: 'TAXA\nTURÍSTICA',
+    phrase: 'TAXA\nTURISTICA',
     clue: 'Allò que el turista contribueix en París però no en Benidorm',
     reveal: ''
   },
   {
-    phrase: 'BOTÀNIC',
+    phrase: 'BOTANIC',
     clue: 'Pese a qui li pese',
     reveal: ''
   },
@@ -60,7 +60,7 @@ export default [
     reveal: ''
   },
   {
-    phrase: 'JOAN\nBALDOVÍ',
+    phrase: 'JOAN\nBALDOVI',
     clue: 'Treballa per 32',
     reveal: ''
   },
@@ -95,7 +95,7 @@ export default [
     reveal: ''
   },
   {
-    phrase: 'JOAN MONLEÓN',
+    phrase: 'JOAN\nMONLEON',
     clue: 'Trie la clotxina o el conill',
     reveal: ''
   },
