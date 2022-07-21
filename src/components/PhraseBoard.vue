@@ -47,7 +47,6 @@ const isSelected = (row, slot) => {
   computedPanel.value.forEach((row, rowIndex) => {
     if (!firstAvailableSlot) {
       const availableSlotInRow = row.findIndex(letter => letter === '')
-      console.log(rowIndex, availableSlotInRow)
       if (availableSlotInRow > -1) {
         firstAvailableSlot = [rowIndex, availableSlotInRow]
       }

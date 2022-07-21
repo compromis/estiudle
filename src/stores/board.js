@@ -11,7 +11,7 @@ export const useBoardStore = defineStore('board', {
       solving: false,
       failed: false,
       solved: false,
-      specialChars: [' ', '\t', '\'', ',', '\n'],
+      specialChars: [' ', '\t', '\'', '’', ',', '\n'],
       lastPlayed: 0
     }
   },
