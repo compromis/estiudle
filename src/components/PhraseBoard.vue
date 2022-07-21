@@ -83,37 +83,78 @@ const isFilled = (letter) => letters.value.includes(letter)
       <span v-for="i in 9" :key="i" class="slot empty" />
     </div>
   </div>
+  <svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg"
+    version="1.1">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -9" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
 </template>
 
 <style lang="scss" scoped>
   .panel {
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    filter: url('#goo');
   }
 
   .row {
-    display: flex;
-    gap: 1rem;
-    margin: 1rem auto;
-    justify-content: center;
+    background: var(--white);
+    padding: clamp(.2rem, .5vw, .5rem);
+    width: fit-content;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    gap: clamp(.2rem, .5vw, .5rem);
   }
 
   .slot {
-    display: block;
-    height: 20px;
-    width: 20px;
-    background: white;
-    color: black;
+    display: flex;
+    text-align: center;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+    height: clamp(2.25rem, 6vw, 5rem);
+    width: clamp(1.75rem, 5vw, 4rem);
+    font-size: var(--font-size-lg);
+    color: var(--black);
+    border-radius: var(--border-radius);
+    outline: clamp(3px, .25vw, 12px) solid var(--blue);
+    outline-offset: calc(clamp(3px, .1vw, 12px) * -1);
 
     &.empty {
-      background: blue;
+      background: var(--blue);
+      outline: none;
     }
 
     &.selected {
-      border: 2px solid black;
+      outline: none;
+      background: var(--orange);
     }
 
     &.filled {
-      background: aquamarine;
+      background: var(--lightblue);
+      outline: none;
     }
   }
+
+    .solved {
+      .slot:not(.empty) {
+        outline: none;
+        background: var(--lightblue);
+      }
+    }
+  
+    .failed {
+      .slot:not(.empty) {
+        outline: none;
+        background: var(--red);
+      }
+    }
 </style>

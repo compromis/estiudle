@@ -25,6 +25,6 @@ import Tester from '@/components/Tester.vue'
   padding-top: calc(var(--font-size-lg + 2rem));
   margin: auto;
   max-width: 900px;
-  padding: 0 1rem;
+  padding: 0 .25rem;
 }
 </style>

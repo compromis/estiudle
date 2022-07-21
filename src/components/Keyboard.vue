@@ -118,9 +118,9 @@ const enterSolveMode = () => {
   grid-template-rows: 1fr;
   grid-auto-columns: 1fr;
   grid-auto-flow: column;
-  gap: .5rem;
+  gap: clamp(.25rem, .5vw, .5rem);
   width: 100%;
-  margin-top: .5rem;
+  margin-top: clamp(.25rem, .5vw, .5rem);
   touch-action: manipulation;
 }
 
@@ -128,9 +128,9 @@ const enterSolveMode = () => {
   font-size: var(--font-size-md);
   border: 0;
   padding: 0;
-  height: 4rem;
+  height: clamp(3.25rem, 8vw, 4.5rem);
   width: 100%;
-  border-radius: .5rem;
+  border-radius: var(--border-radius);
   background-color: var(--white);
   color: var(--black);
   display: flex;
@@ -149,7 +149,7 @@ const enterSolveMode = () => {
 .solve-button {
   font-size: var(--font-size-md);
   width: 100%;
-  border-radius: .5rem;
+  border-radius: var(--border-radius);
   height: 4rem;
 
   &-letter {

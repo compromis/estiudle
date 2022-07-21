@@ -29,22 +29,25 @@ const letters = computed(() => {
 <style lang="scss" scoped>
 .letter-panel {
   list-style: none;
-  width: 100%;
-  padding: 0;
+  padding: .5rem .4rem;
+  width: fit-content;
+  margin: .5rem auto;
   display: flex;
   justify-content: center;
+  background: var(--white);
+  border-radius: var(--border-radius);
 
   .letter {
     font-size: var(--font-size-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: .25rem;
+    margin: 0 .12rem;
     padding: 0;
     height: 3.5rem;
     width: 2.75rem;
-    background: var(--white);
-    border-radius: .5rem;
+    background: var(--lightblue);
+    border-radius: var(--border-radius);
     color: var(--black);
 
     &-false{
@@ -52,7 +55,9 @@ const letters = computed(() => {
     }
 
     &-empty {
-      background: var(--blue);
+      background: var(--white);
+      outline: 4px solid var(--blue);
+      outline-offset: -4px;
     }
   }
 }
