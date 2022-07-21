@@ -119,9 +119,9 @@ const isFilled = (letter) => letters.value.includes(letter)
     line-height: 1;
     align-items: center;
     justify-content: center;
-    height: clamp(2.25rem, 6vw, 5rem);
-    width: clamp(1.75rem, 5vw, 4rem);
-    font-size: var(--font-size-lg);
+    height: clamp(2.15rem, 9vw, 5rem);
+    width: clamp(1.8rem, 7vw, 4rem);
+    font-size: clamp(1.75rem, 7vw, 3.5rem);
     color: var(--black);
     border-radius: var(--border-radius);
     outline: clamp(3px, .25vw, 12px) solid var(--blue);

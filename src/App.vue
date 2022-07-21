@@ -4,8 +4,8 @@ import Clue from '@/components/Clue.vue'
 import PhraseBoard from '@/components/PhraseBoard.vue'
 import LetterBoard from '@/components/LetterBoard.vue'
 import Keyboard from '@/components/Keyboard.vue'
-import Stats from '@/components/Stats.vue'
 import Tester from '@/components/Tester.vue'
+import Results from './components/Results.vue'
 </script>
 
 <template>
@@ -15,7 +15,7 @@ import Tester from '@/components/Tester.vue'
     <Clue />
     <LetterBoard />
     <Keyboard />
-    <Stats />
+    <Results />
   </div>
   <Tester />
 </template>
