@@ -46,6 +46,7 @@ import Instructions from './components/Instructions.vue'
 .panel {
   display: grid;
   gap: .75rem;
+  grid-template-rows: auto 1fr auto;
 }
 
 .letter-board {

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
+import NextEstiudle from './NextEstiudle.vue'
 
 const board = useBoardStore()
 const { today, letters, maxLetters, letterBoard, finished, failed } = storeToRefs(board)
@@ -50,6 +51,7 @@ const share = () => {
     <div class="reveal">
       {{ today.reveal }}
     </div>
+    <NextEstiudle />
   </div>
 </template>
 
