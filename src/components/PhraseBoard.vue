@@ -108,11 +108,9 @@ const isFilled = (letter) => letters.value.includes(letter)
     background: var(--white);
     padding: clamp(.2rem, .5vw, .5rem);
     width: fit-content;
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-auto-columns: 1fr;
-    grid-auto-flow: column;
+    display: flex;
     gap: clamp(.2rem, .5vw, .5rem);
+    margin-top: calc(clamp(.2rem, .5vw, .5rem) * -1);
   }
 
   .slot {
@@ -130,30 +128,29 @@ const isFilled = (letter) => letters.value.includes(letter)
 
     &.empty {
       background: var(--blue);
-      outline: none;
+      box-shadow: none;
     }
 
     &.selected {
-      outline: none;
       background: var(--orange);
     }
 
     &.filled {
       background: var(--lightblue);
-      outline: none;
+      box-shadow: none;
     }
   }
 
     .solved {
       .slot:not(.empty) {
-        outline: none;
+        box-shadow: none;
         background: var(--lightblue);
       }
     }
   
     .failed {
       .slot:not(.empty) {
-        outline: none;
+        box-shadow: none;
         background: var(--red);
       }
     }

@@ -3,59 +3,58 @@ import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board'
 import { computed } from 'vue'
 
-
 const board = useBoardStore()
-const { maxLetters } = board
+const { maxLetters, lettersWithState, finished } = storeToRefs(board)
 
-const letters = computed(() => {
-  const letters = board.lettersWithState
-  while (letters.length < maxLetters) {
+const letterBoard = computed(() => {
+  const letters = [...lettersWithState.value]
+  while (letters.length < maxLetters.value) {
     letters.push({ letter: '', state: 'empty' })
   }
   return letters
 })
-
 </script>
 
 <template>
-  <ul class="letter-panel">
-    <li v-for="letter in letters" :class="['letter', `letter-${letter.state}`]" :key="letter.letter">
+  <ul class="letter-board" v-if="!finished">
+    <li v-for="letter in letterBoard" :class="['letter', `letter-${letter.state}`]" :key="letter.letter">
       {{ letter.letter }}
     </li>
   </ul>
 </template>
 
 <style lang="scss" scoped>
-.letter-panel {
+.letter-board {
   list-style: none;
-  padding: .5rem .4rem;
+  padding: .4rem .3rem;
   width: fit-content;
-  margin: .5rem auto;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   background: var(--white);
   border-radius: var(--border-radius);
+  transform: scale(.8);
 
   .letter {
-    font-size: var(--font-size-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 .12rem;
+    margin: 0 .15rem;
     padding: 0;
-    height: 3.5rem;
-    width: 2.75rem;
+    height: clamp(2.15rem, 9vw, 5rem);
+    width: clamp(1.8rem, 7vw, 4rem);
+    font-size: clamp(1.75rem, 7vw, 3.5rem);
     background: var(--lightblue);
     border-radius: var(--border-radius);
     color: var(--black);
 
-    &-false{
+    &-false {
       background: var(--red);
     }
 
     &-empty {
       background: var(--white);
-      box-shadow: inset 0 0 0 4px var(--blue);
+      box-shadow: inset 0 0 0 clamp(3px, .25vw, 12px) var(--blue);
     }
   }
 }

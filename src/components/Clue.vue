@@ -1,12 +1,14 @@
 <script setup>
+import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 
 const board = useBoardStore()
-const { clue } = board
+
+const { clue, finished } = storeToRefs(board)
 </script>
 
 <template>
-  <div class="clue">
+  <div class="clue" v-if="!finished">
     <div class="clue-content">
       {{ clue }}
     </div>

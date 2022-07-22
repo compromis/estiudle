@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
+import BackspaceIcon from './icons/BackspaceIcon.vue'
 
 const board = useBoardStore()
 
@@ -14,7 +15,7 @@ const rows = [
 const vowels = 'AEIOU'.split('')
 
 const { 
-  letters, keysDisabled,
+  letters, keysDisabled, mustSolve,
   solving, solved, failed, finished,
   firstAvailableSlotInSolution
 } = storeToRefs(board)
@@ -76,25 +77,21 @@ const handleKeyStrokes = (e) => {
 
 <template>
   <div v-if="!finished">
+    <div class="tutorial-text">
+      <span v-if="solving">Escriu la solució</span>
+      <span v-else>Tria fins a 4 consonants i una vocal</span>
+    </div>
+
     <div class="keyboard">
       <div class="row" :key="i" v-for="(row, i) in rows">
         <div class="spacer" v-if="i === 2"></div>
         <button v-for="key in row" :key="key" @click="selectLetter(key)" :disabled="isKeyDisabled(key)"
           :class="['button', selectedLetter === key && 'selected', key.toLowerCase()]">
           <span v-if="key !== 'Backspace'">{{ key }}</span>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-            <path fill="currentColor"
-              d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z">
-            </path>
-          </svg>
+          <BackspaceIcon v-else />
         </button>
         <div class="spacer" v-if="i === 2"></div>
       </div>
-    </div>
-
-    <div class="tutorial-text">
-      <span v-if="solving">Escriu la solució</span>
-      <span v-else>Tria fins a 4 consonants i una vocal</span>
     </div>
 
     <div class="buttons">
@@ -106,7 +103,7 @@ const handleKeyStrokes = (e) => {
         Resoldre el panell
       </button>
       <button
-        v-if="!solving"
+        v-if="!solving && !mustSolve"
         class="solve-button solve-button-letter"
         @click="enterLetter"
         :disabled="!selectedLetter">
@@ -116,7 +113,7 @@ const handleKeyStrokes = (e) => {
         v-if="!solving"
         class="solve-button solve-button-solution"
         @click="enterSolveMode">
-        Me la se
+        {{ !mustSolve ? 'Me la sé!' : 'Resoldre' }}
       </button>
     </div>
   </div>
@@ -125,8 +122,8 @@ const handleKeyStrokes = (e) => {
 <style lang="scss" scoped>
 .keyboard {
   user-select: none;
-  margin: .5rem 0;
 }
+
 .row {
   display: grid;
   grid-template-rows: 1fr;
@@ -175,6 +172,7 @@ const handleKeyStrokes = (e) => {
   border-radius: var(--border-radius);
   height: 4rem;
   line-height: 1;
+  margin-top: .5rem;
 
   &-letter {
     font-size: var(--font-size-sm);
@@ -194,9 +192,10 @@ const handleKeyStrokes = (e) => {
 }
 
 .tutorial-text {
-  width: 100%;
   text-align: center;
-  margin-bottom: .5rem;
+  font-size: var(--font-size-xs);
+  line-height: 1;
+  margin-bottom: 1rem;
 }
 
 .selected:not(:disabled) {
