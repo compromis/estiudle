@@ -6,38 +6,49 @@ import LetterBoard from '@/components/LetterBoard.vue'
 import Keyboard from '@/components/Keyboard.vue'
 import Tester from '@/components/Tester.vue'
 import Results from './components/Results.vue'
+import Stats from './components/Stats.vue'
+import Instructions from './components/Instructions.vue'
 </script>
 
 <template>
   <div class="main-container">
     <div class="main-container-aligner">
       <AppNav />
-      <PhraseBoard />
-      <Clue />
-      <LetterBoard />
+      <div class="panel">
+        <PhraseBoard />
+        <Clue />
+        <LetterBoard />
+      </div>
       <Keyboard />
       <Results />
     </div>
   </div>
   <Tester />
+  <Stats />
+  <Instructions />
 </template>
 
 <style scoped lang="scss">
 .main-container {
-  position: fixed;
   display: flex;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  
+  min-height: calc(var(--vh) * 100);
 
   &-aligner {
     display: grid;
-    grid-template-rows: auto 1fr auto auto auto;
+    grid-template-rows: auto 1fr auto;
     margin: 0 auto;
     max-width: 900px;
-    padding: .5rem .25rem;
+    padding: var(--view-padding);
+    gap: .75rem;
   }
 }
+
+.panel {
+  display: grid;
+  gap: .75rem;
+}
+
+.letter-board {
+  align-self: end;
+} 
 </style>

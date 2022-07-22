@@ -1,17 +1,24 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useStatsStore } from '@/stores/stats.js'
+import StatsIcon from './icons/StatsIcon.vue'
+import InstructionsIcon from './icons/InstructionsIcon.vue'
 
 const stats = useStatsStore()
 
-const openStats = () => stats.openModal()
+const toggleStats = () => stats.toggleStats()
+const toggleInstructions = () => stats.toggleInstructions()
 </script>
 
 <template>
   <div class="app-nav">
-    <button>I</button>
+    <button @click="toggleInstructions" title="Instruccions">
+      <InstructionsIcon />
+    </button>
     <div class="app-nav-logo">Estiudle</div>
-    <button @click="openStats">S</button>
+    <button @click="toggleStats" title="Estadístiques">
+      <StatsIcon />
+    </button>
   </div>
 </template>
 
@@ -21,7 +28,7 @@ const openStats = () => stats.openModal()
   display: flex;
   align-items: center;
   line-height: 1;
-  padding: 1rem 0;
+  margin-bottom: .75rem;
 
   &-logo {
     font-size: var(--font-size-md);
