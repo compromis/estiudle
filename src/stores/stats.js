@@ -15,7 +15,8 @@ export const useStatsStore = defineStore('stats', {
         winPercentage: 0
       },
       lastPlayed: 0,
-      modalOpen: false
+      statsOpen: false,
+      instructionsOpen: false
     }
   },
 
@@ -40,12 +41,12 @@ export const useStatsStore = defineStore('stats', {
       this.stats.winPercentage = this.stats.won * 100 / this.stats.played
     },
 
-    openModal () {
-      this.modalOpen = true
+    toggleStats () {
+      this.statsOpen = !this.statsOpen
     },
 
-    closeModal () {
-      this.modalOpen = false
+    toggleInstructions () {
+      this.instructionsOpen = !this.instructionsOpen
     }
   },
 

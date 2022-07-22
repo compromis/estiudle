@@ -4,12 +4,12 @@ import { useStatsStore } from '@/stores/stats.js'
 import Modal from './Modal.vue'
 
 const stats = useStatsStore()
-const { stats: gameStats, statsOpen } = storeToRefs(stats)
+const { instructionsOpen } = storeToRefs(stats)
 </script>
 
 <template>
-  <Modal class="stats" v-model="statsOpen">
-    {{ gameStats }}
+  <Modal class="stats" v-model="instructionsOpen">
+    Instructions
   </Modal>
 </template>
 

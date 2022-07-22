@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useStatsStore } from '@/stores/stats.js'
 import { currentDate, currentDay } from '@/utils/date.js'
 import phrases from '@/content/phrases.js'
 
@@ -64,11 +65,15 @@ export const useBoardStore = defineStore('board', {
 
     solve () {
       const phrase = this.panel.join('')
+
       if (phrase === this.today.phrase) {
         this.solved = true
       } else {
         this.failed = true
       }
+
+      const stats = useStatsStore()
+      stats.registerStats({ letters: this.letters, failed: this.failed })
     }
   },
 

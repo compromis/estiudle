@@ -1,43 +1,34 @@
 <script setup>
-import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
-import { useStatsStore } from '@/stores/stats.js'
 
 const board = useBoardStore()
-const stats = useStatsStore()
 const { today, letters, finished, failed } = storeToRefs(board)
-const { modalOpen, stats: gameStats } = storeToRefs(stats)
-const close = () => stats.closeModal()
 
-watch(finished, (value) => {
-  if (value) {
-    stats.registerStats({ letters: letters.value, failed: failed.value })
-    stats.openModal()
-  }
-})
+const share = () => {
+  alert('share')
+}
 </script>
 
 <template>
-  <div v-if="modalOpen" class="modal">
-    <button @click="close" class="close-button">✕</button>
-    <div class="modal-header modal-header-success" v-if="!failed">
-      <div class="modal-header-title">Has encertat!</div>
-      Comprant {{ letters.length }} <span v-if="letters.length === 1">lletra</span> <span v-else>lletres</span>
+  <div v-if="finished" class="card">
+    <div class="card-header card-header-success" v-if="!failed">
+      <div class="card-header-title">Has encertat!</div>
+      Comprant {{ letters.length }} {{ letters.length === 1 ? 'lletra' : 'lletres' }}
     </div>
-    <div class="modal-header modal-header-failure" v-else>
-      <div class="modal-header-title">Llàstima!</div>
+    <div class="card-header card-header-failure" v-else>
+      <div class="card-header-title">Llàstima!</div>
       Torna a provar demà!
     </div>
-    <button class="button">Comparteix</button>
-    <div>
+    <button class="button" @click="share">Comparteix</button>
+    <div class="reveal">
       {{ today.reveal }}
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.modal {
+.card {
   position: relative;
   font-size: var(--font-size-sm);
   background: var(--white);
@@ -62,13 +53,11 @@ watch(finished, (value) => {
     width: 100%;
     border-radius: var(--border-radius);
     height: 4rem;
+    margin-bottom: 1rem;
   }
+}
 
-  .close-button {
-    font-size: var(--font-size-sm);
-    position: absolute;
-    top: .25rem;
-    right: .75rem;
-  }
+.reveal {
+  line-height: 1.1;
 }
 </style>
