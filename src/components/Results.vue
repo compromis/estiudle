@@ -1,12 +1,36 @@
 <script setup>
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 
 const board = useBoardStore()
-const { today, letters, finished, failed } = storeToRefs(board)
+const { today, letters, maxLetters, letterBoard, finished, failed } = storeToRefs(board)
+
+const copied = ref(false)
 
 const share = () => {
-  alert('share')
+  const day = new Date().getDate()
+
+  const lettersUsed = failed.value ? 'X' : letters.value.length
+  const letterScore = lettersUsed + '/' + maxLetters.value
+
+  const squares = [...letterBoard.value].map(letter => {
+    const states = {
+      'in-solution': '🟦',
+      'not-in-solution': '🟥',
+      'empty': '🟩'
+    }
+
+    return states[letter.state]
+  }).join('')
+
+  const message = `Estiudle #${day} ${letterScore} ${squares}`
+
+  navigator.clipboard.writeText(message)
+  copied.value = true
+  setTimeout(() => {
+    copied.value = false
+  }, 4000)
 }
 </script>
 
@@ -20,7 +44,9 @@ const share = () => {
       <div class="card-header-title">Llàstima!</div>
       Torna a provar demà!
     </div>
-    <button class="button" @click="share">Comparteix</button>
+    <button class="button" @click="share">
+      {{ copied ? 'Copiat!' : 'Comparteix' }}
+    </button>
     <div class="reveal">
       {{ today.reveal }}
     </div>

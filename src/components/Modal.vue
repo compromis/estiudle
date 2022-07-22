@@ -23,7 +23,7 @@ const close = () => {
 <style lang="scss" scoped>
 .modal {
   position: absolute;
-  top: 3rem;
+  top: var(--view-padding);
   left: var(--view-padding);
   right: var(--view-padding);
   font-size: var(--font-size-sm);

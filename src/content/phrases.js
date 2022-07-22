@@ -12,7 +12,7 @@ export default [
   {
     phrase: 'FIGATELL',
     clue: 'L\'hamburguesa valenciana',
-    reveal: ''
+    reveal: 'Uns diuen que són originals d’Oliva, altres de Pego o Beixama. Siguen d’on siguen, tot el món hauria de tastar alguna vegada en la vida esta delícia tan nostra.'
   },
   {
     phrase: 'MAGDALENA',
@@ -25,7 +25,7 @@ export default [
     reveal: ''
   },
   {
-    phrase: 'AITANA\nMAS',
+    phrase: 'AITANA',
     clue: 'En Alacant i alacantina',
     reveal: ''
   },
@@ -36,7 +36,7 @@ export default [
   },
   {
     phrase: 'AEROPORT\nDE L’ALTET',
-    clue: 'El més gran d\'Europa sense connexió ferroviaria',
+    clue: 'El més gran d’Europa sense connexió ferroviaria',
     reveal: ''
   },
   {

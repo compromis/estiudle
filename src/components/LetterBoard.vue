@@ -4,15 +4,7 @@ import { useBoardStore } from '@/stores/board'
 import { computed } from 'vue'
 
 const board = useBoardStore()
-const { maxLetters, lettersWithState, finished } = storeToRefs(board)
-
-const letterBoard = computed(() => {
-  const letters = [...lettersWithState.value]
-  while (letters.length < maxLetters.value) {
-    letters.push({ letter: '', state: 'empty' })
-  }
-  return letters
-})
+const { maxLetters, letterBoard, finished } = storeToRefs(board)
 </script>
 
 <template>
@@ -48,7 +40,7 @@ const letterBoard = computed(() => {
     border-radius: var(--border-radius);
     color: var(--black);
 
-    &-false {
+    &-not-in-solution {
       background: var(--red);
     }
 

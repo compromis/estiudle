@@ -92,10 +92,14 @@ export const useBoardStore = defineStore('board', {
       return this.today.clue
     },
 
-    lettersWithState ({ letters }) {
-      return letters.map(letter => {
-        const state = this.today.phrase.includes(letter)
-        return { letter, state }
+    letterBoard ({ letters, maxLetters, today }) {
+      return [...new Array(maxLetters)].map((letter, i) => {
+        if (letters[i]) {
+          const state = today.phrase.includes(letters[i]) ? 'in-solution' : 'not-in-solution'
+          return { letter: letters[i], state }
+        } else {
+          return { letter: '', state: 'empty' }
+        }
       })
     },
 
