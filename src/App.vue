@@ -37,7 +37,7 @@ import Instructions from './components/Instructions.vue'
     display: grid;
     grid-template-rows: auto 1fr auto;
     margin: 0 auto;
-    max-width: 900px;
+    max-width: var(--view-max-width);
     padding: var(--view-padding);
     gap: .75rem;
   }

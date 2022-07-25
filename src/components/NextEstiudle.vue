@@ -7,11 +7,21 @@ const timeTillMidnight = computed(() => {
   const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
   return (midnight - now)
 })
+
+const transformSlotProps = (props) => {
+  const formattedProps = {};
+
+  Object.entries(props).forEach(([key, value]) => {
+    formattedProps[key] = value < 10 ? `0${value}` : String(value);
+  });
+
+  return formattedProps;
+}
 </script>
 
 <template>
   <div>Proper estiudle</div>
-  <VueCountdown :time="timeTillMidnight" v-slot="{ hours, minutes, seconds }">
+  <VueCountdown :time="timeTillMidnight" :transform="transformSlotProps" v-slot="{ hours, minutes, seconds }">
     {{ hours }}:{{ minutes }}:{{ seconds }}
   </VueCountdown>
 </template>

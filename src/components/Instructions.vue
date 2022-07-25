@@ -8,7 +8,7 @@ const { instructionsOpen } = storeToRefs(stats)
 </script>
 
 <template>
-  <Modal class="stats" v-model="instructionsOpen">
+  <Modal id="Instructions" title="Instruccions" v-model="instructionsOpen">
     Instructions
   </Modal>
 </template>

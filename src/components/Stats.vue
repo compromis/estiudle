@@ -8,7 +8,7 @@ const { stats: gameStats, statsOpen } = storeToRefs(stats)
 </script>
 
 <template>
-  <Modal class="stats" v-model="statsOpen">
+  <Modal id="Stats" title="Estadístiques" v-model="statsOpen">
     {{ gameStats }}
   </Modal>
 </template>

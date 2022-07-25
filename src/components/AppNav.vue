@@ -12,11 +12,11 @@ const toggleInstructions = () => stats.toggleInstructions()
 
 <template>
   <div class="app-nav">
-    <button @click="toggleInstructions" title="Instruccions">
+    <button @click="toggleInstructions" aria-label="Instruccions">
       <InstructionsIcon />
     </button>
     <div class="app-nav-logo">Estiudle</div>
-    <button @click="toggleStats" title="Estadístiques">
+    <button @click="toggleStats" aria-label="Estadístiques">
       <StatsIcon />
     </button>
   </div>

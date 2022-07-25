@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 import BackspaceIcon from './icons/BackspaceIcon.vue'
@@ -62,15 +62,20 @@ const enterSolveMode = () => {
 }
 
 onMounted(() => {
-  window.addEventListener('keypress', handleKeyStrokes)
+  window.addEventListener('keyup', handleKeyStrokes)
 })
 
-const handleKeyStrokes = (e) => {
-  const letters = 'qwertyuiopasdfghjklçzxcvbnm'.split('')
-  if (letters.includes(e.key) && solving.value) {
-    board.enterSolution(e.key.toUpperCase())
-  } else if (letters.includes(e.key) && !solved.value) {
-    selectedLetter.value = e.key.toUpperCase()
+onUnmounted(() => {
+  window.removeEventListener('keyup', handleKeyStrokes)
+})
+
+const handleKeyStrokes = ({ key }) => {
+  if (/^[a-zA-Z]$/.test(key)) {
+    document.querySelector('.' + key).click()
+  } else if (key === 'Backspace') {
+    document.querySelector('.backspace').click()
+  } else if (key === 'Enter') {
+    document.querySelector('.solve-button').click()
   }
 }
 </script>

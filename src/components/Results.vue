@@ -17,7 +17,7 @@ const share = () => {
 
   const squares = [...letterBoard.value].map(letter => {
     const states = {
-      'in-solution': '🟦',
+      'in-solution': '🟧',
       'not-in-solution': '🟥',
       'empty': '🟩'
     }
