@@ -71,12 +71,12 @@ const close = () => {
     h2 {
       margin: 0;
       line-height: 1;
-      font-size: var(--font-size-sm);
+      font-size: var(--font-size-md);
     }
   }
 
   .close-button {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
     position: absolute;
     top: .25rem;
     right: .5rem;
