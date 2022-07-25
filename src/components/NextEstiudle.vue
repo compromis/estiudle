@@ -20,12 +20,21 @@ const transformSlotProps = (props) => {
 </script>
 
 <template>
-  <div>Proper estiudle</div>
-  <VueCountdown :time="timeTillMidnight" :transform="transformSlotProps" v-slot="{ hours, minutes, seconds }">
+  <p>Proper estiudle</p>
+  <VueCountdown :time="timeTillMidnight" :transform="transformSlotProps" v-slot="{ hours, minutes, seconds }" class="countdown">
     {{ hours }}:{{ minutes }}:{{ seconds }}
   </VueCountdown>
 </template>
 
 <style lang="scss" scoped>
+p {
+  font-size: var(--font-size-xs);
+  margin: 0;
+  line-height: 1;
+}
 
+.countdown {
+  font-size: var(--font-size-md);
+  font-variant-numeric: tabular-nums;
+}
 </style>
