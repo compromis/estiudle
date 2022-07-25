@@ -50,7 +50,6 @@ const close = () => {
   color: var(--black);
   border-radius: var(--border-radius);
   padding: .75rem;
-  text-align: center;
   max-width: var(--view-max-width);
   margin: 0 auto;
 
