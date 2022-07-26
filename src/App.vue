@@ -14,7 +14,7 @@ import Instructions from './components/Instructions.vue'
   <div class="main-container">
     <div class="main-container-aligner">
       <AppNav />
-      <div class="panel">
+      <div class="panel-wrapper">
         <PhraseBoard />
         <Clue />
         <LetterBoard />
@@ -43,7 +43,7 @@ import Instructions from './components/Instructions.vue'
   }
 }
 
-.panel {
+.panel-wrapper {
   display: grid;
   gap: .75rem;
   grid-template-rows: auto 1fr auto;

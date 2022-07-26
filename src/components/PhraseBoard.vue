@@ -6,8 +6,9 @@ import { gsap } from 'gsap'
 
 
 const board = useBoardStore()
-const { letters, panel, solution, solving, solved, failed, finished } = storeToRefs(board)
+const { letters, lettersWithState, panel, solution, solving, solved, failed, finished } = storeToRefs(board)
 
+// Animate panel solved
 const animateSolved = () => {
   gsap.to(`.slot:not(.filled) .back`, {
     rotateY: '0deg',
@@ -26,6 +27,13 @@ const animateSolved = () => {
   })
 }
 
+watch(finished, (isFinished) => {
+  if (isFinished) {
+    animateSolved()
+  }
+}) 
+
+// Animate letter reveal
 const animateLetters = ( letter ) => {
   gsap.to(`.filled.letter-${letter.toLowerCase()} .back`, {
     rotateY: '0deg',
@@ -44,16 +52,41 @@ const animateLetters = ( letter ) => {
   })
 }
 
-
-watch(finished, (isFinished) => {
-  if (isFinished) {
-    animateSolved()
-  }
-}) 
-
 watch(letters, (newLetters) => {
   nextTick(() =>  animateLetters(newLetters[newLetters.length - 1]))
-}, {deep: true}) 
+}, { deep: true }) 
+
+// Animate panel shake
+const animateShake = () => {
+  gsap.to('.panel', { 
+    x: "+=20", 
+    yoyo: true, 
+    repeat: 5,
+    duration: 0.1
+  })
+  gsap.to('.panel', { 
+    x: "-=20", 
+    yoyo: true, 
+    repeat: 5,
+    duration: 0.1
+  })
+  gsap.fromTo('.panel .row', {
+    background: 'var(--red)'
+  },
+  {
+    background: 'var(--white)',
+    duration: .5
+  }
+  )
+}
+
+watch(lettersWithState, ( newLetters ) => {
+  const lastLetter = newLetters[newLetters.length - 1]
+  console.log(lastLetter)
+  if (lastLetter.state === 'not-in-solution') {
+    animateShake()
+  }
+}, { deep: true })
 
 onMounted(() => {
   board.startGame()
@@ -117,12 +150,6 @@ const isSelected = (row, slot) => {
 }
 
 const isFilled = (letter) => letters.value.includes(letter)
-
-const revealDelay = (isFilled) => {
-  
-  delay.value += isFilled ? 300 : 0
-  return delay.value
-}
 </script>
 
 <template>
@@ -133,9 +160,9 @@ const revealDelay = (isFilled) => {
     <div v-for="(row , r) in panelToSolve" :key="r" class="row">
       <template v-for="(letter, l) in row" :key="`${r}${l}`">
         <span v-if="isEmpty(letter)" class="empty slot"></span>
-        <span v-else
-          :class="['slot', 'fillable', `letter-${solvedPanel[r][l].toLowerCase()}`, { selected: isSelected(r, l), filled: isFilled(letter) }]"
-          :style="{ '--transition-delay-solve': `${(l * 100) + (r * 500)}ms` }">
+        <span
+          v-else
+          :class="['slot', 'fillable', `letter-${solvedPanel[r][l].toLowerCase()}`, { selected: isSelected(r, l), filled: isFilled(letter) }]">
           <span class="front">{{ letter }}</span>
           <span class="back">{{ solvedPanel[r][l] }}</span>
         </span>
@@ -200,8 +227,6 @@ const revealDelay = (isFilled) => {
       left: 0;
       bottom: 0;
       backface-visibility: hidden;
-      //transition: transform 2s ease-in-out;
-      //transition-delay: var(--transition-delay);
     }
 
     .back {
@@ -213,13 +238,11 @@ const revealDelay = (isFilled) => {
     }
 
     &.filled .back {
-      //transform: rotateY(0);
       background: var(--lightblue);
       box-shadow: none;
     }
 
     &.filled .front {
-      //transform: rotateY(180deg);
       background: var(--orange);
       color: var(--orange);
       box-shadow: none;
