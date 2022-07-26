@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-countdown": "2",
+    "canvas-confetti": "^1.5.1",
     "gsap": "^3.10.4",
     "pinia": "^2.0.16",
     "pinia-plugin-persistedstate": "^1.6.3",

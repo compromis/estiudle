@@ -1,14 +1,15 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import confetti from 'canvas-confetti'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 import NextEstiudle from './NextEstiudle.vue'
 
 const board = useBoardStore()
-const { today, letters, maxLetters, letterBoard, finished, failed } = storeToRefs(board)
+const { today, letters, maxLetters, letterBoard, finished, solved, failed } = storeToRefs(board)
 
+// Share results
 const copied = ref(false)
-
 const share = () => {
   const day = new Date().getDate()
 
@@ -33,6 +34,39 @@ const share = () => {
     copied.value = false
   }, 4000)
 }
+
+// Throw confetti if solved
+const throwConfetti = () => {
+  const end = Date.now() + (5 * 1000)
+  const colors = ['#34bdb3', '#e65f25', '#fff', '#C3E4D1', '#fc9ea3'];
+
+  (function frame() {
+    confetti({
+      particleCount: 5,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 },
+      colors
+    })
+    confetti({
+      particleCount: 5,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 },
+      colors
+    })
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame)
+    }
+  }())
+}
+
+watch(solved, (isSolved) => {
+  if (isSolved) {
+    throwConfetti()
+  }
+})
 </script>
 
 <template>

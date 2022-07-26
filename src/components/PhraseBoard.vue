@@ -4,7 +4,6 @@ import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 import { gsap } from 'gsap'
 
-
 const board = useBoardStore()
 const { letters, lettersWithState, panel, solution, solving, solved, failed, finished } = storeToRefs(board)
 
@@ -82,7 +81,6 @@ const animateShake = () => {
 
 watch(lettersWithState, ( newLetters ) => {
   const lastLetter = newLetters[newLetters.length - 1]
-  console.log(lastLetter)
   if (lastLetter.state === 'not-in-solution') {
     animateShake()
   }

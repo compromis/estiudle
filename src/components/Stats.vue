@@ -15,7 +15,7 @@ const barLength = (value) => maxValue.value === 0 ? 0 : value / maxValue.value *
 </script>
 
 <template>
-  <Modal class="stats" id="Stats" title="Estadístiques" v-model="statsOpen">
+  <Modal id="Stats" title="Estadístiques" v-model="statsOpen">
     <div class="stats-grid">
       <div class="stat">
         <div class="stat-number">{{gameStats.won}}/{{gameStats.played}}</div>
