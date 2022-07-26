@@ -1,26 +1,74 @@
 <script setup>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, watch, nextTick } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
+import { gsap } from 'gsap'
+
 
 const board = useBoardStore()
-const { letters, panel, solution, solving, solved, failed } = storeToRefs(board)
+const { letters, panel, solution, solving, solved, failed, finished } = storeToRefs(board)
+
+const animateSolved = () => {
+  gsap.to(`.slot:not(.filled) .back`, {
+    rotateY: '0deg',
+    duration: .65,
+    stagger: .4,
+    delay: .3,
+    ease: 'Power3.out'
+  })
+
+  gsap.to(`.slot:not(.filled) .front`, {
+    rotateY: '180deg',
+    duration: .65,
+    stagger: .4,
+    delay: .3,
+    ease: 'Power3.out'
+  })
+}
+
+const animateLetters = ( letter ) => {
+  gsap.to(`.filled.letter-${letter.toLowerCase()} .back`, {
+    rotateY: '0deg',
+    duration: .65,
+    stagger: .4,
+    delay: .3,
+    ease: 'Power3.out'
+  })
+
+  gsap.to(`.filled.letter-${letter.toLowerCase()} .front`, {
+    rotateY: '180deg',
+    duration: .65,
+    stagger: .4,
+    delay: .3,
+    ease: 'Power3.out'
+  })
+}
+
+
+watch(finished, (isFinished) => {
+  if (isFinished) {
+    animateSolved()
+  }
+}) 
+
+watch(letters, (newLetters) => {
+  nextTick(() =>  animateLetters(newLetters[newLetters.length - 1]))
+}, {deep: true}) 
 
 onMounted(() => {
   board.startGame()
 })
 
-const computedPanel = computed(() => {
-  const thisSolution = solution.value
-  const thisPanel = failed.value ? [...thisSolution] : [...panel.value]
-  const splitAt = thisPanel.findIndex(row => row === '\n')
+const composePanel = (source) => {
+  const thisSource = [...source]
+  const splitAt = thisSource.findIndex(row => row === '\n')
   let rows
 
   if (splitAt === -1) {
-    rows = [thisPanel, []]
+    rows = [thisSource, []]
   } else {
-    const firstRow = thisPanel.splice(0, splitAt)
-    const secondRow = thisPanel.splice(1)
+    const firstRow = thisSource.splice(0, splitAt)
+    const secondRow = thisSource.splice(1)
     rows = [firstRow, secondRow]
   }
 
@@ -38,14 +86,19 @@ const computedPanel = computed(() => {
 
     return row
   })
-})
+
+}
+
+
+const panelToSolve = computed(() => composePanel(panel.value))
+const solvedPanel = computed(() => composePanel(solution.value))
 
 const isEmpty = (letter) => letter === 'empty' || letter === ' '
 
 const isSelected = (row, slot) => {
   let firstAvailableSlot = null
 
-  computedPanel.value.forEach((row, rowIndex) => {
+  panelToSolve.value.forEach((row, rowIndex) => {
     if (!firstAvailableSlot) {
       const availableSlotInRow = row.findIndex(letter => letter === '')
       if (availableSlotInRow > -1) {
@@ -64,6 +117,12 @@ const isSelected = (row, slot) => {
 }
 
 const isFilled = (letter) => letters.value.includes(letter)
+
+const revealDelay = (isFilled) => {
+  
+  delay.value += isFilled ? 300 : 0
+  return delay.value
+}
 </script>
 
 <template>
@@ -71,11 +130,14 @@ const isFilled = (letter) => letters.value.includes(letter)
     <div class="row">
       <span v-for="i in 9" :key="i" class="slot empty" />
     </div>
-    <div v-for="(row , r) in computedPanel" :key="r" class="row">
+    <div v-for="(row , r) in panelToSolve" :key="r" class="row">
       <template v-for="(letter, l) in row" :key="`${r}${l}`">
-        <span v-if="isEmpty(letter)" :class="['slot', 'empty']" />
-        <span v-else :class="['slot', { selected: isSelected(r, l), filled: isFilled(letter) }]">
-          {{ letter }}
+        <span v-if="isEmpty(letter)" class="empty slot"></span>
+        <span v-else
+          :class="['slot', 'fillable', `letter-${solvedPanel[r][l].toLowerCase()}`, { selected: isSelected(r, l), filled: isFilled(letter) }]"
+          :style="{ '--transition-delay-solve': `${(l * 100) + (r * 500)}ms` }">
+          <span class="front">{{ letter }}</span>
+          <span class="back">{{ solvedPanel[r][l] }}</span>
         </span>
       </template>
     </div>
@@ -114,42 +176,69 @@ const isFilled = (letter) => letters.value.includes(letter)
   }
 
   .slot {
-    display: flex;
-    text-align: center;
-    line-height: 1;
-    align-items: center;
-    justify-content: center;
     height: clamp(2.15rem, 9vw, 5rem);
     width: clamp(1.8rem, 7vw, 4rem);
-    font-size: clamp(1.75rem, 7vw, 3.5rem);
-    color: var(--black);
+    position: relative;
     border-radius: var(--border-radius);
-    box-shadow: inset 0 0 0 clamp(3px, .25vw, 12px) var(--blue);
 
     &.empty {
       background: var(--blue);
       box-shadow: none;
     }
 
-    &.selected {
-      background: var(--orange);
+    .front, .back {
+      font-size: clamp(1.75rem, 7vw, 3.5rem);
+      color: var(--black);
+      border-radius: var(--border-radius);
+      box-shadow: inset 0 0 0 clamp(3px, .25vw, 12px) var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute; 
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      backface-visibility: hidden;
+      //transition: transform 2s ease-in-out;
+      //transition-delay: var(--transition-delay);
     }
 
-    &.filled {
+    .back {
+      transform: rotateY(180deg);
+    }
+
+    .front {
+      background: var(--white);
+    }
+
+    &.filled .back {
+      //transform: rotateY(0);
       background: var(--lightblue);
       box-shadow: none;
+    }
+
+    &.filled .front {
+      //transform: rotateY(180deg);
+      background: var(--orange);
+      color: var(--orange);
+      box-shadow: none;
+    }
+
+    &.selected .front {
+      background: var(--orange);
     }
   }
 
     .solved {
-      .slot:not(.empty) {
+      .slot:not(.empty) .back {
         box-shadow: none;
         background: var(--lightblue);
       }
     }
   
     .failed {
-      .slot:not(.empty) {
+      .slot:not(.empty):not(.filled) .back {
         box-shadow: none;
         background: var(--red);
       }

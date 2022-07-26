@@ -3,8 +3,11 @@ import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board'
 import { computed } from 'vue'
 
+
 const board = useBoardStore()
 const { maxLetters, letterBoard, finished } = storeToRefs(board)
+
+
 </script>
 
 <template>
