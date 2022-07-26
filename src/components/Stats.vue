@@ -30,14 +30,16 @@ const barLength = (value) => maxValue.value === 0 ? 0 : value / maxValue.value *
         <div class="stat-name">Ratxa màxima</div>
       </div>
     </div>
-    <h3 style="text-align: left;">Lletres comprades</h3>
+    <h3 style="text-align: left; margin-bottom: .5rem;">Lletres comprades</h3>
     <ul class="stats-graph">
       <li v-for="(letter, number) in gameStats.letters" :key="letter">
         <span class="graph-number">{{number}}</span>
         <span class="graph-bar" :style="`width: ${barLength(letter)}%`">{{letter}}</span>
       </li>
     </ul>
-    <NextEstiudle />
+    <div class="next-estiudle">
+      <NextEstiudle />
+    </div>
   </Modal>
 </template>
 
@@ -89,5 +91,10 @@ const barLength = (value) => maxValue.value === 0 ? 0 : value / maxValue.value *
     padding: .25rem .5rem;
     min-width: var(--font-size-md);
   }
+}
+
+.next-estiudle {
+  text-align: center;
+  width: 100%;
 }
 </style>
