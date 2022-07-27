@@ -45,7 +45,7 @@ export default [
     reveal: ''
   },
   {
-    phrase: 'TAXA\nTURISTICA',
+    phrase: 'TAXA\nTURÍSTICA',
     clue: 'Allò que el turista contribueix en París però no en Benidorm',
     reveal: ''
   },

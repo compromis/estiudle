@@ -12,7 +12,14 @@ export const useBoardStore = defineStore('board', {
       solving: false,
       failed: false,
       solved: false,
-      specialChars: [' ', '\t', '\'', '’', ',', '\n'],
+      specialChars: [' ', '\t', '\'', '’', '·', ',', '\n'],
+      letterMarks: {
+        'A': ['À'],
+        'E': ['È', 'É'],
+        'I': ['Í', 'Ï'],
+        'O': ['Ò', 'Ó'],
+        'U': ['Ú', 'Ü']
+      },
       lastPlayed: 0
     }
   },
@@ -35,8 +42,8 @@ export const useBoardStore = defineStore('board', {
 
     addLetterToPanel (letter) {
       this.solution.forEach((l, i) => {
-        if (l === letter) {
-          this.panel[i] = letter
+        if (l === letter || (letter in this.letterMarks && this.letterMarks[letter].includes(l))) {
+          this.panel[i] = l
         }
       })
     },
@@ -64,9 +71,10 @@ export const useBoardStore = defineStore('board', {
     },
 
     solve () {
-      const phrase = this.panel.join('')
+      const phrase = this.removeLetterMarks(this.panel.join(''))
+      const normalizedSolution = this.removeLetterMarks(this.today.phrase)
 
-      if (phrase === this.today.phrase) {
+      if (phrase === normalizedSolution) {
         this.solved = true
       } else {
         this.failed = true
@@ -74,6 +82,10 @@ export const useBoardStore = defineStore('board', {
 
       const stats = useStatsStore()
       stats.registerStats({ letters: this.letters, failed: this.failed })
+    },
+
+    removeLetterMarks (value) {
+      return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     }
   },
 

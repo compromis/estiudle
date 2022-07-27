@@ -147,7 +147,11 @@ const isSelected = (row, slot) => {
   return solving.value && rowIndex === row && slotIndex === slot
 }
 
-const isFilled = (letter) => letters.value.includes(letter)
+const isFilled = (letter) => letters.value.includes(removeLetterMarks(letter))
+
+const removeLetterMarks = (letter) => {
+  return board.removeLetterMarks(letter)
+}
 </script>
 
 <template>
@@ -160,7 +164,7 @@ const isFilled = (letter) => letters.value.includes(letter)
         <span v-if="isEmpty(letter)" class="empty slot"></span>
         <span
           v-else
-          :class="['slot', 'fillable', `letter-${solvedPanel[r][l].toLowerCase()}`, { selected: isSelected(r, l), filled: isFilled(letter) }]">
+          :class="['slot', 'fillable', `letter-${removeLetterMarks(solvedPanel[r][l].toLowerCase())}`, { selected: isSelected(r, l), filled: isFilled(letter) }]">
           <span class="front">{{ letter }}</span>
           <span class="back">{{ solvedPanel[r][l] }}</span>
         </span>
