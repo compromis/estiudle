@@ -23,10 +23,21 @@ const share = () => {
       'empty': '🟩'
     }
 
+    const emojis = {
+      '0': '🏆',
+      '1': '🎉',
+      '2': '🙌',
+      '3': '👏',
+      '4': '🤪',
+      '5': '😅',
+      'X': '😵',
+    }
+    const emoji = emojis[lettersUsed]
+  
     return states[letter.state]
   }).join('')
 
-  const message = `Estiudle #${day} ${letterScore} ${squares}`
+  const message = `#Estiudle #${day}\n${letterScore} ${squares}${emoji}\nestiudle.compromis.net`
 
   navigator.clipboard.writeText(message)
   copied.value = true
@@ -82,9 +93,7 @@ watch(solved, (isSolved) => {
     <button class="button" @click="share">
       {{ copied ? 'Copiat!' : 'Comparteix' }}
     </button>
-    <div class="reveal">
-      {{ today.reveal }}
-    </div>
+    <div class="reveal" v-html="today.reveal" />
     <NextEstiudle />
   </div>
 </template>
@@ -115,11 +124,11 @@ watch(solved, (isSolved) => {
     width: 100%;
     border-radius: var(--border-radius);
     height: 4rem;
-    margin-bottom: 1rem;
   }
 }
 
 .reveal {
   line-height: 1.1;
+  margin: 2rem 0;
 }
 </style>
