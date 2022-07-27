@@ -13,6 +13,7 @@ const rows = [
 ]
 
 const vowels = 'AEIOU'.split('')
+const showKeyboard = ref(false)
 
 const { 
   letters, keysDisabled, mustSolve,
@@ -50,6 +51,7 @@ const selectLetter = (key) => {
 const enterLetter = () => {
   board.enterLetter(selectedLetter.value)
   selectedLetter.value = null
+  showKeyboard.value = false
 }
 
 const solve = () => {
@@ -57,6 +59,7 @@ const solve = () => {
 }
 
 const enterSolveMode = () => {
+  showKeyboard.value = true
   selectedLetter.value = null
   board.enterSolveMode()
 }
@@ -81,13 +84,30 @@ const handleKeyStrokes = ({ key }) => {
 </script>
 
 <template>
-  <div v-if="!finished">
-    <div class="tutorial-text">
-      <span v-if="solving">Escriu la solució</span>
-      <span v-else>Tria fins a 4 consonants i una vocal</span>
-    </div>
-
+  <div v-if="!finished" :class="['keyboard-wrapper', { 'show-keyboard' : showKeyboard }]">
     <div class="keyboard">
+      <div class="buttons-inside">
+        <template v-if="solving">
+          <Transition name="slide-down" mode="out-in">
+            <div class="tutorial-text" v-if="firstAvailableSlotInSolution !== -1">
+              Emplena el panell
+            </div>
+            <button v-else class="solve-button solve-button-confirm" @click="solve">
+              Resoldre
+            </button>
+          </Transition>
+        </template>
+        <template v-else>
+          <Transition name="slide-down" mode="out-in">
+            <div class="tutorial-text" v-if="!selectedLetter && !solving">
+              Selecciona una lletra
+            </div>
+            <button v-else class="solve-button solve-button-letter" @click="enterLetter">
+              {{ `Compra la ${selectedLetter}` }}
+            </button>
+          </Transition>
+        </template>
+      </div>
       <div class="row" :key="i" v-for="(row, i) in rows">
         <div class="spacer" v-if="i === 2"></div>
         <button v-for="key in row" :key="key" @click="selectLetter(key)" :disabled="isKeyDisabled(key)"
@@ -99,34 +119,27 @@ const handleKeyStrokes = ({ key }) => {
       </div>
     </div>
 
-    <div class="buttons">
-      <button
-        v-if="solving"
-        class="solve-button solve-button-confirm"
-        @click="solve"
-        :disabled="firstAvailableSlotInSolution !== -1">
-        Resoldre el panell
-      </button>
-      <button
-        v-if="!solving && !mustSolve"
-        class="solve-button solve-button-letter"
-        @click="enterLetter"
-        :disabled="!selectedLetter">
-        {{ selectedLetter ? `Compra la ${selectedLetter}` : 'Selecciona lletra' }}
-      </button>
-      <button
-        v-if="!solving"
-        class="solve-button solve-button-solution"
-        @click="enterSolveMode">
-        {{ !mustSolve ? 'Me la sé!' : 'Resoldre' }}
-      </button>
-    </div>
+    <Transition name="slide-down">
+      <div class="buttons-outside" v-if="!showKeyboard">
+        <button class="solve-button solve-button-letter" @click="showKeyboard = true">
+          Comprar una lletra
+        </button>
+        <button v-if="!solving" class="solve-button solve-button-solution" @click="enterSolveMode">
+          Me la sé!
+        </button>
+      </div>
+    </Transition>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .keyboard {
   user-select: none;
+
+  &-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
 }
 
 .row {
@@ -140,13 +153,22 @@ const handleKeyStrokes = ({ key }) => {
   touch-action: manipulation;
 }
 
-.buttons {
+.buttons-outside {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: var(--orange);
   display: flex;
-  gap: .5rem;
+  justify-content: flex-end;
+  flex-direction: column;
+}
 
+.buttons-inside {
   .solve-button {
-    flex-grow: 1;
-  }
+      margin-top: 0;
+    }
 }
 
 .button {
@@ -180,7 +202,6 @@ const handleKeyStrokes = ({ key }) => {
   margin-top: .5rem;
 
   &-letter {
-    font-size: var(--font-size-sm);
     background: var(--blue);
     color: var(--white);
   }
@@ -197,14 +218,48 @@ const handleKeyStrokes = ({ key }) => {
 }
 
 .tutorial-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   line-height: 1;
-  margin-bottom: 1rem;
+  height: 4rem;
 }
 
 .selected:not(:disabled) {
   border: 4px var(--blue) solid;
   color: var(--blue)
+}
+
+.keyboard {
+  transform: translateY(120px);
+  opacity: 0;
+  transition: .3s ease-out;
+}
+
+.show-keyboard .keyboard {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slide-up-enter-active, .slide-down-enter-active {
+  transition: 0.25s ease-out;
+}
+
+.slide-up-leave-active, .slide-down-leave-active {
+  transition: 0.25s ease-out;
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  transform: translateY(-50px);
+  opacity: 0;
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
 }
 </style>
