@@ -64,6 +64,10 @@ const enterSolveMode = () => {
   board.enterSolveMode()
 }
 
+const giveUp = () => {
+  board.giveUp()
+}
+
 onMounted(() => {
   window.addEventListener('keyup', handleKeyStrokes)
 })
@@ -121,8 +125,11 @@ const handleKeyStrokes = ({ key }) => {
 
     <Transition name="slide-down">
       <div class="buttons-outside" v-if="!showKeyboard">
-        <button class="solve-button solve-button-letter" @click="showKeyboard = true">
+        <button class="solve-button solve-button-letter" @click="showKeyboard = true" v-if="!mustSolve">
           Comprar una lletra
+        </button>
+        <button class="solve-button solve-button-giveup" v-else @click="giveUp">
+          Em rendisc
         </button>
         <button v-if="!solving" class="solve-button solve-button-solution" @click="enterSolveMode">
           Me la sé!
@@ -209,6 +216,11 @@ const handleKeyStrokes = ({ key }) => {
   &-solution,
   &-confirm {
     background: var(--red);
+    color: var(--white);
+  }
+
+  &-giveup {
+    background: var(--black);
     color: var(--white);
   }
 

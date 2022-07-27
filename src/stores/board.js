@@ -84,6 +84,12 @@ export const useBoardStore = defineStore('board', {
       stats.registerStats({ letters: this.letters, failed: this.failed })
     },
 
+    giveUp () {
+      this.failed = true
+      const stats = useStatsStore()
+      stats.registerStats({ letters: this.letters, failed: this.failed })
+    },
+
     removeLetterMarks (value) {
       if (value === 'ç' || value === 'Ç') return value
       return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
