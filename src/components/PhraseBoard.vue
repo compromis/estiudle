@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed, watch, nextTick } from 'vue'
+import { ref, onMounted, computed, watch, nextTick } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 import { gsap } from 'gsap'
@@ -68,27 +68,10 @@ watch(letters, (newLetters) => {
 }, { deep: true }) 
 
 // Animate panel shake
+const shaking = ref(false)
 const animateShake = () => {
-  gsap.to('.panel', { 
-    x: "+=20", 
-    yoyo: true, 
-    repeat: 5,
-    duration: 0.1
-  })
-  gsap.to('.panel', { 
-    x: "-=20", 
-    yoyo: true, 
-    repeat: 5,
-    duration: 0.1
-  })
-  gsap.fromTo('.panel .row', {
-      background: 'var(--red)'
-    },
-    {
-      background: 'var(--white)',
-      duration: .5
-    }
-  )
+  shaking.value = true
+  setTimeout(() => shaking.value = false, 1000)
 }
 
 watch(lettersWithState, ( newLetters ) => {
@@ -160,7 +143,7 @@ const isFilled = (letter) => letters.value.includes(board.removeLetterMarks(lett
 </script>
 
 <template>
-  <div :class="['panel', { solved, failed }]">
+  <div :class="['panel', { solved, failed, shaking }]">
     <div class="row">
       <span v-for="i in 9" :key="i" class="slot empty" />
     </div>
@@ -275,6 +258,50 @@ const isFilled = (letter) => letters.value.includes(board.removeLetterMarks(lett
       .slot:not(.empty):not(.filled) .back {
         box-shadow: none;
         background: var(--red);
+      }
+    }
+
+    .shaking {
+      animation: shake 1s;
+    }
+
+    .shaking .row {
+      background: var(--red);
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translate(2px);
+      }
+      10% {
+        transform: translate(-4px);
+      }
+      20% {
+        transform: translate(4px);
+      }
+      30% {
+        transform: translate(-4px);
+      }
+      40% {
+        transform: translate(4px);
+      }
+      50% {
+        transform: translate(-4px);
+      }
+      60% {
+        transform: translate(4px);
+      }
+      70% {
+        transform: translate(-4px);
+      }
+      80% {
+        transform: translate(4px);
+      }
+      90% {
+        transform: translate(-4px);
+      }
+      100% {
+        transform: translate(2px);
       }
     }
 </style>
