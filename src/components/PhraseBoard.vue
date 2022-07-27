@@ -7,6 +7,17 @@ import { gsap } from 'gsap'
 const board = useBoardStore()
 const { letters, lettersWithState, panel, solution, solving, solved, failed, finished } = storeToRefs(board)
 
+// Start game
+onMounted(() => {
+  board.startGame()
+
+  // Animate letters in case user returns mid-game or after solving
+  animateLetters()
+  if (finished) {
+    animateSolved()
+  }
+})
+
 // Animate panel solved
 const animateSolved = () => {
   gsap.to(`.slot:not(.filled) .back`, {
@@ -33,8 +44,9 @@ watch(finished, (isFinished) => {
 }) 
 
 // Animate letter reveal
-const animateLetters = ( letter ) => {
-  gsap.to(`.filled.letter-${letter.toLowerCase()} .back`, {
+const animateLetters = (letter) => {
+  const parent = letter ? `.filled.letter-${letter.toLowerCase()}` : '.filled'
+  gsap.to(`${parent} .back`, {
     rotateY: '0deg',
     duration: .65,
     stagger: .4,
@@ -42,7 +54,7 @@ const animateLetters = ( letter ) => {
     ease: 'Power3.out'
   })
 
-  gsap.to(`.filled.letter-${letter.toLowerCase()} .front`, {
+  gsap.to(`${parent} .front`, {
     rotateY: '180deg',
     duration: .65,
     stagger: .4,
@@ -70,12 +82,12 @@ const animateShake = () => {
     duration: 0.1
   })
   gsap.fromTo('.panel .row', {
-    background: 'var(--red)'
-  },
-  {
-    background: 'var(--white)',
-    duration: .5
-  }
+      background: 'var(--red)'
+    },
+    {
+      background: 'var(--white)',
+      duration: .5
+    }
   )
 }
 
@@ -86,10 +98,7 @@ watch(lettersWithState, ( newLetters ) => {
   }
 }, { deep: true })
 
-onMounted(() => {
-  board.startGame()
-})
-
+// Compose panel
 const composePanel = (source) => {
   const thisSource = [...source]
   const splitAt = thisSource.findIndex(row => row === '\n')
@@ -120,10 +129,10 @@ const composePanel = (source) => {
 
 }
 
-
 const panelToSolve = computed(() => composePanel(panel.value))
 const solvedPanel = computed(() => composePanel(solution.value))
 
+// Panel state
 const isEmpty = (letter) => letter === 'empty' || letter === ' '
 
 const isSelected = (row, slot) => {
@@ -147,11 +156,7 @@ const isSelected = (row, slot) => {
   return solving.value && rowIndex === row && slotIndex === slot
 }
 
-const isFilled = (letter) => letters.value.includes(removeLetterMarks(letter))
-
-const removeLetterMarks = (letter) => {
-  return board.removeLetterMarks(letter)
-}
+const isFilled = (letter) => letters.value.includes(board.removeLetterMarks(letter))
 </script>
 
 <template>
@@ -164,7 +169,7 @@ const removeLetterMarks = (letter) => {
         <span v-if="isEmpty(letter)" class="empty slot"></span>
         <span
           v-else
-          :class="['slot', 'fillable', `letter-${removeLetterMarks(solvedPanel[r][l].toLowerCase())}`, { selected: isSelected(r, l), filled: isFilled(letter) }]">
+          :class="['slot', 'fillable', `letter-${board.removeLetterMarks(solvedPanel[r][l].toLowerCase())}`, { selected: isSelected(r, l), filled: isFilled(letter) }]">
           <span class="front">{{ letter }}</span>
           <span class="back">{{ solvedPanel[r][l] }}</span>
         </span>

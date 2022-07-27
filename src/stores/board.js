@@ -85,6 +85,7 @@ export const useBoardStore = defineStore('board', {
     },
 
     removeLetterMarks (value) {
+      if (value === 'ç' || value === 'Ç') return value
       return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     }
   },
