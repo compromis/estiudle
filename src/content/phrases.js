@@ -2,12 +2,12 @@ export default [
   {
     phrase: 'XORIÇO',
     clue: 'Un corrupte o atemptat a la paella',
-    reveal: ''
+    reveal: 'Si d’alguna cosa sabem les valencianes i els valencians, és del mal que fa el xoriço a la paella i les institucions.'
   },
   {
     phrase: 'RODALIES',
     clue: 'Cada vegada van a pitjor',
-    reveal: ''
+    reveal: 'Cada any, Renfe cancela més de 7.593 trens de rodalia i vora 12.000 arriben en retard. Vols saber per què? T’ho contem en <a href="https://trencancelado.com">trencancelado.com</a>'
   },
   {
     phrase: 'FIGATELL',
@@ -17,7 +17,11 @@ export default [
   {
     phrase: 'MAGDALENA',
     clue: 'Festa plena',
-    reveal: ''
+    reveal: `Magdalena festa plena, de la llum les festes són,<br>
+    Magdalena festa plena, d’alegria omplen el cor,<br>
+    Magdalena festa plena, les millors festes del món!<br>
+    I com sóc castellonero i com sóc castellonero,<br>
+    vull cridar avui ben fort!`
   },
   {
     phrase: 'LA\nBICICLETA',
@@ -37,7 +41,10 @@ export default [
   {
     phrase: 'AEROPORT\nDE L’ALTET',
     clue: 'El més gran d’Europa sense connexió ferroviaria',
-    reveal: ''
+    reveal: `
+    <p>Sí, no entenem per què, però el govern de Pedro Sánchez, igual que va fer el de Rajoy i tots els anteriors, continuen discriminant a les comarques d’Alacant deixant que l’aeroport de l’Altet d’Alacant-Elx continue sent l’únic de tota Europa sense connexió en tren.</p>
+    <p>Però des de Compromís, continuarem reclamant-ho fins que siga una realitat. Més info en <a href="https://trencancelado.com">trencancelado.com</a></p>
+    `
   },
   {
     phrase: 'PLASTICS',
@@ -60,7 +67,7 @@ export default [
     reveal: ''
   },
   {
-    phrase: 'JOAN\nBALDOVI',
+    phrase: 'JOAN\nBALDOVÍ',
     clue: 'Treballa per 32',
     reveal: ''
   },
@@ -95,14 +102,25 @@ export default [
     reveal: ''
   },
   {
-    phrase: 'JOAN\nMONLEON',
+    phrase: 'JOAN\nMONLEÓN',
     clue: 'Trie la clotxina o el conill',
     reveal: ''
   },
   {
     phrase: 'INVERSIONS\nDE L’ESTAT',
     clue: 'Totes van a Madrid',
-    reveal: ''
+    reveal: `
+    <p>Any rere any, el govern central multiplica les inversions a Madrid per damunt fins i tot dels diners pressupostats, i deixa a la ciutadania valenciana a la cua en inversió de l’Estat.</p>
+    <p>Esta és la situació en xifres:</p>
+    <ul>
+      <li>Inversió aprovada per a Madrid: 1.134M€</li>
+      <li>Inversió executada: 2.086M€, el 184% (casi el doble)</li>
+    </ul>
+    <ul>
+      <li>Inversió aprovada per a València: 1.107M€</li>
+      <li>Inversió executada: 469M€, el 42% (ni la mitat)</li>
+    </ul>
+    `
   },
   {
     phrase: 'LIBERATE',

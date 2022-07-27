@@ -1,6 +1,6 @@
 body {
   background: var(--orange);
-  font-family: "Fig Grotesk", sans-serif;
+  font-family: var(--base-font);
   color: var(--white);
   margin: 0;
   font-weight: bold;
@@ -12,6 +12,10 @@ button {
   outline: none;
   border: none;
   cursor: pointer;
-  font-family: "Fig Grotesk", sans-serif;
+  font-family: inherit;
   font-weight: bold;
+}
+
+a {
+  color: var(--black);
 }

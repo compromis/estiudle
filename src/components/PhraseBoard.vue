@@ -198,6 +198,7 @@ const isFilled = (letter) => letters.value.includes(board.removeLetterMarks(lett
     align-items: center;
     filter: url('#goo');
     align-self: center;
+    user-select: none;
   }
 
   .row {

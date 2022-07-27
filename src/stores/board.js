@@ -71,10 +71,10 @@ export const useBoardStore = defineStore('board', {
     },
 
     solve () {
-      const phrase = this.removeLetterMarks(this.panel.join(''))
-      const normalizedSolution = this.removeLetterMarks(this.today.phrase)
-
-      if (phrase === normalizedSolution) {
+      const panel = this.removeLetterMarks(this.panel.join(''))
+      const solution = this.removeLetterMarks(this.today.phrase)
+  
+      if (panel === solution) {
         this.solved = true
       } else {
         this.failed = true
@@ -107,7 +107,7 @@ export const useBoardStore = defineStore('board', {
 
     lettersWithState({ letters, today }) {
       return letters.map(letter => {
-        const state = today.phrase.includes(letter) ? 'in-solution' : 'not-in-solution'
+        const state = this.removeLetterMarks(today.phrase).includes(letter) ? 'in-solution' : 'not-in-solution'
         return { letter, state }
       })
     },
