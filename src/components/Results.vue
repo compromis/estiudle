@@ -25,19 +25,20 @@ const share = () => {
       'empty': '🟩'
     }
 
-    const emojis = {
-      '0': '🏆',
-      '1': '🎉',
-      '2': '🙌',
-      '3': '👏',
-      '4': '🤪',
-      '5': '😅',
-      'X': '😵',
-    }
-    const emoji = emojis[lettersUsed]
-  
     return states[letter.state]
   }).join('')
+
+  const emojis = {
+    '0': '🏆',
+    '1': '🎉',
+    '2': '🙌',
+    '3': '👏',
+    '4': '🤪',
+    '5': '😅',
+    'X': '😵',
+  }
+
+  const emoji = emojis[lettersUsed]
 
   const message = `#Estiudle #${day}\n${letterScore} ${squares}${emoji}\nestiudle.compromis.net`
 
