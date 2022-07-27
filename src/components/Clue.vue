@@ -23,6 +23,7 @@ const { clue, finished } = storeToRefs(board)
   align-items: center;
   justify-content: center;
   text-align: center;
+  margin-top: 1rem;
 
   &-content {
     border-radius: .25rem;

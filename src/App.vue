@@ -32,7 +32,6 @@ import Instructions from './components/Instructions.vue'
 .main-container {
   display: flex;
   min-height: calc(var(--vh) * 100);
-  width: 100%;
 
   &-aligner {
     display: grid;
@@ -41,14 +40,8 @@ import Instructions from './components/Instructions.vue'
     max-width: var(--view-max-width);
     padding: var(--view-padding);
     gap: .75rem;
-    width: 100%;
+    flex-grow: 1;
   }
-}
-
-.panel-wrapper {
-  display: grid;
-  gap: .75rem;
-  grid-template-rows: auto 1fr auto;
 }
 
 .letter-board {

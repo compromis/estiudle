@@ -9,9 +9,9 @@ const { instructionsOpen } = storeToRefs(stats)
 
 <template>
   <Modal id="Instructions" title="Instruccions" v-model="instructionsOpen">
-    <p>Endevina la paraula o frase del dia. Cada dia trobaràs una nova!</p>
+    <p>Endevina la paraula o frase del dia comprant la menor quanitat de lletres. Cada dia trobaràs una nova!</p>
     <p>Pots comprar fins a 5 lletres si necessites ajuda. Només podràs comprar una vocal.</p>
-    <p>Les lletres que es troben a la solució es mostraran al panel. Les que no s'hi troben es mostraran en roig.</p>
+    <p>Les lletres que es troben a la solució es mostraran al panell. Les que no s'hi troben es mostraran en roig.</p>
     <p>
       <span class="letter in-solution">A</span>
       <span class="letter not-in-solution">B</span>

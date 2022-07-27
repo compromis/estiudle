@@ -95,6 +95,6 @@ const barLength = (value) => maxValue.value === 0 ? 0 : value / maxValue.value *
 
 .next-estiudle {
   text-align: center;
-  width: 100%;
+  margin-top: 2rem;
 }
 </style>

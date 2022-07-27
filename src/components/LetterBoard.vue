@@ -27,6 +27,7 @@ const { maxLetters, letterBoard, finished } = storeToRefs(board)
   background: var(--white);
   border-radius: var(--border-radius);
   transform: scale(.8);
+  margin-top: 1.25rem;
 
   .letter {
     position: relative;

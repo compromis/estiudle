@@ -13,7 +13,7 @@ onMounted(() => {
 
   // Animate letters in case user returns mid-game or after solving
   animateLetters()
-  if (finished) {
+  if (finished.value) {
     animateSolved()
   }
 })
@@ -206,8 +206,11 @@ const isFilled = (letter) => letters.value.includes(board.removeLetterMarks(lett
     padding: clamp(.2rem, .5vw, .5rem);
     width: fit-content;
     display: flex;
-    gap: clamp(.2rem, .5vw, .5rem);
     margin-top: calc(clamp(.2rem, .5vw, .5rem) * -1);
+
+    .slot:not(:last-child) {
+      margin-right: clamp(.2rem, .5vw, .5rem);
+    }
   }
 
   .slot {

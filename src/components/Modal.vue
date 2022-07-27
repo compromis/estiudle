@@ -79,6 +79,8 @@ const close = () => {
     position: absolute;
     top: .25rem;
     right: .5rem;
+    color: inherit;
+    padding: 0;
   }
 }
 

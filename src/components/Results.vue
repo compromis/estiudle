@@ -3,9 +3,11 @@ import { ref, watch } from 'vue'
 import confetti from 'canvas-confetti'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
+import { useStatsStore } from '@/stores/stats.js'
 import NextEstiudle from './NextEstiudle.vue'
 
 const board = useBoardStore()
+const stats = useStatsStore()
 const { today, letters, maxLetters, letterBoard, finished, solved, failed } = storeToRefs(board)
 
 // Share results
@@ -93,6 +95,9 @@ watch(solved, (isSolved) => {
     <button class="button" @click="share">
       {{ copied ? 'Copiat!' : 'Comparteix' }}
     </button>
+    <button class="button stats" @click="stats.toggleStats()">
+      Estadístiques
+    </button>
     <div class="reveal" v-html="today.reveal" />
     <NextEstiudle />
   </div>
@@ -118,17 +123,31 @@ watch(solved, (isSolved) => {
   }
 
   .button {
+    display: block;
     background: var(--blue);
     color: var(--white);
     font-size: var(--font-size-md);
     width: 100%;
     border-radius: var(--border-radius);
     height: 4rem;
+
+    &.stats {
+      background: var(--orange);
+      margin-top: .5rem;
+    }
   }
 }
 
 .reveal {
   line-height: 1.1;
-  margin: 2rem 0;
+  margin: 1.5rem 0;
+  text-align: left;
+  padding: 0 .75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--black);
+
+  & > :deep(*:last-child) {
+    margin-bottom: 0;
+  }
 }
 </style>
