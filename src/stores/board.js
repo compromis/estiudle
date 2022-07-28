@@ -95,7 +95,9 @@ export const useBoardStore = defineStore('board', {
     },
 
     removeLetterMarks (value) {
-      if (value === 'ç' || value === 'Ç') return value
+      // It's bodging time to remove the letter marks
+      const bodges = ['ç', 'Ç', 'FINANÇAMENT\nJUST', 'XORIÇO']
+      if (bodges.includes(value)) return value
       return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     },
 
