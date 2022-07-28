@@ -89,12 +89,21 @@ const handleKeyStrokes = ({ key }) => {
     document.querySelector('.solve-button').click()
   }
 }
+
+const handleBack = () => {
+  showKeyboard.value = false
+  if (solving) {
+    board.resetPanel()
+    board.leaveSolveMode()
+  }
+}
 </script>
 
 <template>
   <div v-if="!finished" :class="['keyboard-wrapper', { 'show-keyboard' : showKeyboard }]">
     <div class="keyboard">
       <div class="buttons-inside">
+        <button class="solve-button solve-button-back" @click="handleBack">←</button>
         <template v-if="solving">
           <Transition name="slide-down" mode="out-in">
             <div class="tutorial-text" v-if="firstAvailableSlotInSolution !== -1">
@@ -133,7 +142,7 @@ const handleKeyStrokes = ({ key }) => {
           Comprar una lletra
         </button>
         <div v-if="!solving" class="button-group">
-          <button v-if="!solving" class="solve-button solve-button-solution" @click="enterSolveMode">
+          <button class="solve-button solve-button-solution" @click="enterSolveMode">
             Me la sé!
           </button>
           <button class="solve-button solve-button-giveup" v-if="mustSolve" @click="giveUp" title="Em rendisc">
@@ -179,6 +188,7 @@ const handleKeyStrokes = ({ key }) => {
 }
 
 .buttons-inside {
+  display: flex;
   .solve-button {
       margin-top: 0;
     }
@@ -238,6 +248,13 @@ const handleKeyStrokes = ({ key }) => {
     }
   }
 
+  &-back {
+    background: var(--black);
+    color: var(--white);
+    margin-right: clamp(.25rem, .5vw, .5rem);
+    width: 12%;
+  }
+
   &:disabled {
     opacity: .6;
   }
@@ -256,6 +273,10 @@ const handleKeyStrokes = ({ key }) => {
   font-size: var(--font-size-sm);
   line-height: 1;
   height: 4rem;
+  flex-grow: 1;
+  width: 100%;
+  border: 2px solid lighten(#fbb138, 15);
+  border-radius: var(--border-radius);
 }
 
 .selected:not(:disabled) {

@@ -70,6 +70,10 @@ export const useBoardStore = defineStore('board', {
       this.solving = true
     },
 
+    leaveSolveMode () {
+      this.solving = false
+    },
+
     solve () {
       const panel = this.removeLetterMarks(this.panel.join(''))
       const solution = this.removeLetterMarks(this.today.phrase)
@@ -93,6 +97,12 @@ export const useBoardStore = defineStore('board', {
     removeLetterMarks (value) {
       if (value === 'ç' || value === 'Ç') return value
       return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    },
+
+    resetPanel() {
+      for (let i = 0; i <= this.solution.length; i++) {
+        this.backspace()
+      }
     }
   },
 
