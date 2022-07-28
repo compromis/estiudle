@@ -252,7 +252,9 @@ const handleBack = () => {
     background: var(--black);
     color: var(--white);
     margin-right: clamp(.25rem, .5vw, .5rem);
-    width: 12%;
+    width: fit-content;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   &:disabled {
