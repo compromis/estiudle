@@ -51,21 +51,21 @@ const share = () => {
 
 // Throw confetti if solved
 const throwConfetti = () => {
-  const end = Date.now() + (5 * 1000)
+  const end = Date.now() + (3 * 1000)
   const colors = ['#34bdb3', '#e65f25', '#fff', '#C3E4D1', '#fc9ea3'];
 
   (function frame() {
     confetti({
       particleCount: 5,
       angle: 60,
-      spread: 55,
+      spread: 45,
       origin: { x: 0 },
       colors
     })
     confetti({
       particleCount: 5,
       angle: 120,
-      spread: 55,
+      spread: 45,
       origin: { x: 1 },
       colors
     })

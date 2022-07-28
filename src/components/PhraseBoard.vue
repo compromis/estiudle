@@ -225,6 +225,7 @@ const isFilled = (letter) => letters.value.includes(board.removeLetterMarks(lett
 
     .back {
       transform: rotateY(180deg);
+      color: var(--white);
     }
 
     .front {
@@ -234,6 +235,7 @@ const isFilled = (letter) => letters.value.includes(board.removeLetterMarks(lett
     &.filled .back {
       background: var(--lightblue);
       box-shadow: none;
+      color: var(--black);
     }
 
     &.filled .front {
@@ -251,6 +253,7 @@ const isFilled = (letter) => letters.value.includes(board.removeLetterMarks(lett
       .slot:not(.empty) .back {
         box-shadow: none;
         background: var(--lightblue);
+        color: var(--black);
       }
     }
   

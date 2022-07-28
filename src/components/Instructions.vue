@@ -26,7 +26,6 @@ const { instructionsOpen } = storeToRefs(stats)
     margin: 1rem 0;
     line-height: 1.1;
     max-width: 60ch;
-    font-weight: normal;
   }
 
   p:last-child {
