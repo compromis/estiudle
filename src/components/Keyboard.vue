@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoardStore } from '@/stores/board.js'
 import BackspaceIcon from './icons/BackspaceIcon.vue'
+import GiveUpIcon from './icons/GiveUpIcon.vue'
 
 const board = useBoardStore()
 
@@ -65,7 +66,10 @@ const enterSolveMode = () => {
 }
 
 const giveUp = () => {
-  board.giveUp()
+  const confirmed = confirm('Estàs segur que vols rendir-te?')
+  if (confirmed) {
+    board.giveUp()
+  }
 }
 
 onMounted(() => {
@@ -128,12 +132,14 @@ const handleKeyStrokes = ({ key }) => {
         <button class="solve-button solve-button-letter" @click="showKeyboard = true" v-if="!mustSolve">
           Comprar una lletra
         </button>
-        <button class="solve-button solve-button-giveup" v-else @click="giveUp">
-          Em rendisc
-        </button>
-        <button v-if="!solving" class="solve-button solve-button-solution" @click="enterSolveMode">
-          Me la sé!
-        </button>
+        <div v-if="!solving" class="button-group">
+          <button v-if="!solving" class="solve-button solve-button-solution" @click="enterSolveMode">
+            Me la sé!
+          </button>
+          <button class="solve-button solve-button-giveup" v-if="mustSolve" @click="giveUp" title="Em rendisc">
+            <GiveUpIcon />
+          </button>
+        </div>
       </div>
     </Transition>
   </div>
@@ -222,11 +228,24 @@ const handleKeyStrokes = ({ key }) => {
   &-giveup {
     background: var(--black);
     color: var(--white);
+    width: fit-content;
+    padding-left: 2rem;
+    padding-right: 2rem;
+
+    svg {
+      height: 1em;
+      width: 1em;
+    }
   }
 
   &:disabled {
     opacity: .6;
   }
+}
+
+.button-group {
+  display: flex;
+  gap: .5rem;
 }
 
 .tutorial-text {

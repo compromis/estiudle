@@ -162,8 +162,7 @@ const isFilled = (letter) => letters.value.includes(board.removeLetterMarks(lett
       <span v-for="i in 9" :key="i" class="slot empty" />
     </div>
   </div>
-  <svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg"
-    version="1.1">
+  <svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
     <defs>
       <filter id="goo">
         <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
@@ -261,6 +260,7 @@ const isFilled = (letter) => letters.value.includes(board.removeLetterMarks(lett
       .slot:not(.empty):not(.filled) .back {
         box-shadow: none;
         background: var(--red);
+        color: var(--black);
       }
     }
 
