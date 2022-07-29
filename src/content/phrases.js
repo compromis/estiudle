@@ -101,7 +101,7 @@ export default [
   },
   {
     phrase: 'LAWFARE',
-    clue: 'Guerra bruta de la dreta i extrema dreta',
+    clue: 'Guerra bruta de la dreta i extrema dreta als tribunals',
     reveal: 'Anglicisme que explica la utilització per part de la dreta i l’extrema dreta dels recursos judicials per a perjudicar amb denúncies falses els seus rivals polítics i tractar d’aconseguir titulars que publiquen els seus mitjans de comunicació afins per tal de fer creure que “tots els polítics són iguals”. '
   },
   {
@@ -195,7 +195,7 @@ export default [
   },
   {
     phrase: 'TOMATINA\nDE BUNYOL',
-    clue: 'Fer ketchup a la valenciana',
+    clue: 'Fer \'ketchup\' a la valenciana',
     reveal: 'Una de les festes valencianes més divertides i sabroses que se celebra l’últim dimecres d’agost a Bunyol. Es tracta d’una batalla campal on els participants es llancen tomaques i que cada any alberga visitants de tots els punts del planeta, sent una de les festes més internacionals del nostre territori.'
   }
 ]
