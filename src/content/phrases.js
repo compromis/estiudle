@@ -101,7 +101,7 @@ export default [
   },
   {
     phrase: 'LAWFARE',
-    clue: 'Guerra brutal de la dreta i extrema dreta',
+    clue: 'Guerra bruta de la dreta i extrema dreta',
     reveal: 'Anglicisme que explica la utilització per part de la dreta i l’extrema dreta dels recursos judicials per a perjudicar amb denúncies falses els seus rivals polítics i tractar d’aconseguir titulars que publiquen els seus mitjans de comunicació afins per tal de fer creure que “tots els polítics són iguals”. '
   },
   {
