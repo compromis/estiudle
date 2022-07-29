@@ -49,7 +49,7 @@ const close = () => {
   background: var(--white);
   color: var(--black);
   border-radius: var(--border-radius);
-  padding: .75rem;
+  padding: 1rem;
   max-width: var(--view-max-width);
   margin: 0 auto;
 
@@ -76,11 +76,11 @@ const close = () => {
 
   .close-button {
     font-size: var(--font-size-md);
-    position: absolute;
-    top: .25rem;
-    right: .5rem;
     color: inherit;
-    padding: 0;
+    padding: 1rem;
+    margin: -1rem;
+    display: flex;
+    align-items: center;
   }
 }
 

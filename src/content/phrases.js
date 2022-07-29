@@ -172,7 +172,7 @@ export default [
     phrase: 'FINANÇAMENT\nJUST',
     clue: 'Allò que mai arriva',
     reveal: `
-      <p>Sabies que la ciutadania valenciana duu anys i anys sent de les pitjor finançades de tot l’Estat pel govern central? Una injustícia que reconeixen tots els governs centrals, però que ni PP ni PSOE s’han dignat a reformar, malgrat incomplir la Constitució.</p>
+      <p>Sabies que la ciutadania valenciana du anys i anys sent de les pitjor finançades de tot l’Estat pel govern central? Una injustícia que reconeixen tots els governs centrals, però que ni PP ni PSOE s’han dignat a reformar, malgrat incomplir la Constitució.</p>
       <p>I que suposa això? Doncs que, malgrat estar per baix de la mitjana estatal de renda per càpita, aportem com si estiguérem per damunt. És a dir, amb els nostres impostos financem territoris més rics que els nostres.</p>
     `
   },
