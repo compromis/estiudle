@@ -57,7 +57,7 @@ export const useStatsStore = defineStore('stats', {
       const testing = window.location.hash
 
       if (today > context.store.lastPlayed || testing) {
-        context.store.$patch({ modalOpen: false })
+        context.store.$patch({ statsOpen: false, instructionsOpen: false })
       }
     }
   },
