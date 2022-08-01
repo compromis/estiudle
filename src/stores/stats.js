@@ -39,6 +39,11 @@ export const useStatsStore = defineStore('stats', {
       }
 
       this.stats.winPercentage = this.stats.won * 100 / this.stats.played
+
+      gtag('event', 'game_finished', {
+        'letters': letters.length,
+        'result': failed ? 'failed' : 'solved'
+      })
     },
 
     toggleStats () {
