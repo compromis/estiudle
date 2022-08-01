@@ -112,7 +112,7 @@ export const useBoardStore = defineStore('board', {
     today () {
       const testing = window.location.hash.replaceAll('#','')
       const day = currentDay()
-      return testing ? phrases[testing] : phrases[day]
+      return testing ? phrases[testing] : phrases[day - 1]
     },
 
     solution () {
